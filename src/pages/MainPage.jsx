@@ -9,7 +9,7 @@ function MainPage() {
       <NavBar />
 
       <div>
-        <Routes path="/*">
+        <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
         </Routes>

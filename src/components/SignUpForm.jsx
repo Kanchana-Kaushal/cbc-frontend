@@ -1,7 +1,12 @@
+import axios from "axios";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function SignUpForm(props) {
   const toggleAuth = props.toggleAuth;
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -10,7 +15,23 @@ function SignUpForm(props) {
     watch,
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/auth/sign-up",
+        data,
+      );
+
+      toast.success("User created successfully");
+
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", response.data.user);
+
+      navigate("/home");
+    } catch (err) {
+      toast.error(err.response.data.error);
+    }
+  };
 
   const password = watch("password");
 
@@ -22,7 +43,9 @@ function SignUpForm(props) {
       <h2 className="mb-6 text-3xl font-bold">Sign Up</h2>
 
       {/* Username */}
-      <label htmlFor="username">Username:</label>
+      <label htmlFor="username" className="text-sm text-gray-800">
+        Username:
+      </label>
       <input
         {...register("username", {
           required: "Username is required",
@@ -42,13 +65,15 @@ function SignUpForm(props) {
         autoComplete="off"
       />
       {errors.username && (
-        <p role="alert" className="mb-3 text-sm text-red-600">
+        <p role="alert" className="text-sm text-red-600">
           {errors.username.message}
         </p>
       )}
 
       {/* Email */}
-      <label htmlFor="email">Email:</label>
+      <label htmlFor="email" className="mt-3 text-sm text-gray-800">
+        Email:
+      </label>
       <input
         {...register("email", {
           required: "Email is required",
@@ -64,13 +89,15 @@ function SignUpForm(props) {
         autoComplete="off"
       />
       {errors.email && (
-        <p role="alert" className="mb-3 text-sm text-red-600">
+        <p role="alert" className="text-sm text-red-600">
           {errors.email.message}
         </p>
       )}
 
       {/* Password */}
-      <label htmlFor="password">Password:</label>
+      <label htmlFor="password" className="mt-3 text-sm text-gray-800">
+        Password:
+      </label>
       <input
         {...register("password", {
           required: "Password is required",
@@ -89,13 +116,15 @@ function SignUpForm(props) {
         className="mb-1 w-full rounded-md p-2 ring-1 ring-gray-400"
       />
       {errors.password && (
-        <p role="alert" className="mb-3 text-sm text-red-600">
+        <p role="alert" className="text-sm text-red-600">
           {errors.password.message}
         </p>
       )}
 
       {/* Confirm Password */}
-      <label htmlFor="confirmPassword">Confirm Password:</label>
+      <label htmlFor="confirmPassword" className="mt-3 text-sm text-gray-800">
+        Confirm Password:
+      </label>
       <input
         {...register("confirmPassword", {
           required: "Please confirm your password",
@@ -107,7 +136,7 @@ function SignUpForm(props) {
         className="mb-1 w-full rounded-md p-2 ring-1 ring-gray-400"
       />
       {errors.confirmPassword && (
-        <p role="alert" className="mb-3 text-sm text-red-600">
+        <p role="alert" className="text-sm text-red-600">
           {errors.confirmPassword.message}
         </p>
       )}
@@ -115,7 +144,7 @@ function SignUpForm(props) {
       {/* Submit Button */}
       <button
         type="submit"
-        className="mt-6 mb-3 w-full rounded-md bg-gradient-to-r from-[#f8997d] to-[#ad336d] p-2 font-semibold text-white"
+        className="mt-6 mb-3 w-full cursor-pointer rounded-md bg-gradient-to-r from-[#f8997d] to-[#ad336d] p-2 font-semibold text-white transition-transform duration-75 ease-in-out active:scale-99"
       >
         Sign Up
       </button>
