@@ -4,34 +4,37 @@ import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import { IoAdd } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
-function Products() {
+function ProductsPage() {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
-
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get(
-        import.meta.env.VITE_BACKEND_URL + "/api/products/",
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        },
-      );
-
-      setProducts(response.data.data.products);
-
-      toast.success("Products fetched successfully");
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Something went wrong");
-    }
-  };
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    if (isLoading) {
+      (async () => {
+        try {
+          const response = await axios.get(
+            import.meta.env.VITE_BACKEND_URL + "/api/products/",
+            {
+              headers: {
+                Authorization: "Bearer " + token,
+              },
+            },
+          );
+
+          setProducts(response.data.data.products);
+          setIsLoading(false);
+          toast.success("Products fetched successfully");
+        } catch (error) {
+          toast.error(error.response?.data?.message || "Something went wrong");
+        }
+      })();
+    }
+  }, [isLoading]);
 
   const tableContent = products.map((product) => (
     <tr
@@ -39,7 +42,7 @@ function Products() {
       className="cursor-pointer transition hover:bg-gray-50"
     >
       <td className="px-6 py-4">
-        {product.inventory.available === "true" ? (
+        {product.inventory.available === false ? (
           <div className="ml-4 h-3 w-3 rounded-full bg-red-600"></div>
         ) : (
           <div className="ml-4 h-3 w-3 rounded-full bg-green-600"></div>
@@ -80,44 +83,55 @@ function Products() {
         <h1 className="text-3xl font-bold">Products</h1>
         <hr className="mt-4 mb-8" />
 
-        <table className="min-w-full divide-y divide-gray-200 overflow-hidden rounded-lg shadow-lg">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="px-6 py-3 text-left text-sm font-semibold tracking-wider text-gray-700 uppercase">
-                Status
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold tracking-wider text-gray-700 uppercase">
-                Product ID
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold tracking-wider text-gray-700 uppercase">
-                Image
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold tracking-wider text-gray-700 uppercase">
-                Name
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold tracking-wider text-gray-700 uppercase">
-                Qty
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold tracking-wider text-gray-700 uppercase">
-                Price
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-semibold tracking-wider text-gray-700 uppercase">
-                Options
-              </th>
-            </tr>
-          </thead>
+        {isLoading ? (
+          <div className="mt-50 flex h-full w-full items-center justify-center">
+            <div className="h-[70px] w-[70px] animate-spin rounded-full border-[5px] border-gray-300 border-t-blue-900"></div>
+          </div>
+        ) : (
+          <table className="min-w-full divide-y divide-gray-200 overflow-hidden rounded-lg shadow-lg">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-6 py-3 text-left text-sm font-semibold tracking-wider text-gray-700 uppercase">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold tracking-wider text-gray-700 uppercase">
+                  Product ID
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold tracking-wider text-gray-700 uppercase">
+                  Image
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold tracking-wider text-gray-700 uppercase">
+                  Name
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold tracking-wider text-gray-700 uppercase">
+                  Qty
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold tracking-wider text-gray-700 uppercase">
+                  Price
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold tracking-wider text-gray-700 uppercase">
+                  Options
+                </th>
+              </tr>
+            </thead>
 
-          <tbody className="divide-y divide-gray-200 bg-white">
-            {tableContent}
-          </tbody>
-        </table>
+            <tbody className="divide-y divide-gray-200 bg-white">
+              {tableContent}
+            </tbody>
+          </table>
+        )}
       </section>
 
-      <div className="absolute top-8/10 right-20 min-h-16 min-w-16 cursor-pointer rounded-full bg-blue-500 drop-shadow-2xl transition-transform ease-in-out hover:scale-110">
+      <div
+        className="absolute top-8/10 right-20 min-h-16 min-w-16 cursor-pointer rounded-full bg-blue-500 drop-shadow-2xl transition-transform ease-in-out hover:scale-110"
+        onClick={() => {
+          navigate("/admin/add-products");
+        }}
+      >
         <IoAdd className="size-16 text-white" />
       </div>
     </>
   );
 }
 
-export default Products;
+export default ProductsPage;

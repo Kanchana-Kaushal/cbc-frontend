@@ -1,6 +1,7 @@
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import Products from "./Products";
+import ProductsPage from "./Products";
+import AddProductsPage from "./AddProducts";
 
 function AdminHome() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -53,7 +54,8 @@ function AdminHome() {
         <main className="h-screen flex-8/10 overflow-y-scroll bg-gray-50 p-8 inset-shadow-sm">
           <Routes>
             <Route path="/orders" element={<h1>orders</h1>} />
-            <Route path="/products" element={<Products />} />
+            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/add-products" element={<AddProductsPage />} />
             <Route path="/users" element={<h1>users</h1>} />
             <Route path="/admins" element={<h1>admins</h1>} />
           </Routes>
