@@ -32,7 +32,26 @@ function ProductsPage() {
         toast.error(error.response?.data?.message || "Something went wrong");
       }
     })();
-  }, [isLoading, token]);
+  }, [isLoading]);
+
+  /* Delete Function */
+  const deleteProduct = async (productId) => {
+    try {
+      const response = await axios.delete(
+        import.meta.env.VITE_BACKEND_URL + "/api/products/" + productId,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        },
+      );
+
+      toast.success("Product deleted successfully");
+      setIsLoading(true);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
 
   const tableContent = products.map((product) => {
     const { productId, images, name, inventory, priceInfo } = product;
@@ -75,7 +94,12 @@ function ProductsPage() {
             >
               <FaEdit />
             </button>
-            <button className="size-7 cursor-pointer transition hover:text-red-600">
+            <button
+              className="size-7 cursor-pointer transition hover:text-red-600"
+              onClick={() => {
+                deleteProduct(product._id);
+              }}
+            >
               <FaTrash />
             </button>
           </div>
