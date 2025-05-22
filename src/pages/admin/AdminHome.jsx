@@ -2,6 +2,7 @@ import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import ProductsPage from "./Products";
 import AddProductsPage from "./AddProducts";
+import EditProductPage from "./EditProductsPage";
 
 function AdminHome() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -56,6 +57,7 @@ function AdminHome() {
             <Route path="/orders" element={<h1>orders</h1>} />
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/add-products" element={<AddProductsPage />} />
+            <Route path="/edit-products" element={<EditProductPage />} />
             <Route path="/users" element={<h1>users</h1>} />
             <Route path="/admins" element={<h1>admins</h1>} />
           </Routes>

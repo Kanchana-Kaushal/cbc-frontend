@@ -65,7 +65,14 @@ function ProductsPage() {
         <td className="px-6 py-4 text-sm text-gray-700">${price}</td>
         <td className="px-6 py-4">
           <div className="flex items-center gap-6 text-gray-600">
-            <button className="size-7 cursor-pointer transition hover:text-blue-600">
+            <button
+              className="size-7 cursor-pointer transition hover:text-blue-600"
+              onClick={() => {
+                navigate("/admin/edit-products", {
+                  state: product,
+                });
+              }}
+            >
               <FaEdit />
             </button>
             <button className="size-7 cursor-pointer transition hover:text-red-600">

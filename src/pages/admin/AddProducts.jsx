@@ -58,7 +58,7 @@ function AddProductsPage() {
     };
 
     try {
-      await axios.post(
+      const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/products/add-new",
         newProduct,
         {
@@ -72,7 +72,12 @@ function AddProductsPage() {
 
       navigate("/admin/products");
     } catch (err) {
-      toast.error(err);
+      console.error("Update error:", err.response?.data || err.message);
+      toast.error(
+        err.response?.data?.message ||
+          err.message ||
+          "An error occurred while updating the product",
+      );
     }
   };
 
@@ -276,9 +281,12 @@ function AddProductsPage() {
       </div>
 
       <div className="mb-4 flex min-h-30 flex-wrap items-start gap-4 p-4 ring-1 ring-gray-300">
-        {keywords.map((keyword) => (
-          <span className="flex w-fit items-center gap-2 bg-gray-300 p-1 text-sm">
-            {keyword}{" "}
+        {keywords.map((keyword, index) => (
+          <span
+            className="flex w-fit items-center gap-2 bg-gray-300 p-1 text-sm"
+            key={index}
+          >
+            {keyword}
             <IoCloseOutline
               onClick={() => {
                 removeKeyword(keyword);
