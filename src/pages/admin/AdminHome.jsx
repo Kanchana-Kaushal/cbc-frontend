@@ -3,6 +3,9 @@ import { useEffect } from "react";
 import ProductsPage from "./Products";
 import AddProductsPage from "./AddProducts";
 import EditProductPage from "./EditProductsPage";
+import UserPage from "./UsersPage";
+import AdminPage from "./AdminsPage";
+import CreateAdminPage from "./RegisterAdmin";
 
 function AdminHome() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -58,8 +61,9 @@ function AdminHome() {
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/add-products" element={<AddProductsPage />} />
             <Route path="/edit-products" element={<EditProductPage />} />
-            <Route path="/users" element={<h1>users</h1>} />
-            <Route path="/admins" element={<h1>admins</h1>} />
+            <Route path="/users" element={<UserPage />} />
+            <Route path="/admins" element={<AdminPage />} />
+            <Route path="/admins/add-admin" element={<CreateAdminPage />} />
           </Routes>
         </main>
       </div>
