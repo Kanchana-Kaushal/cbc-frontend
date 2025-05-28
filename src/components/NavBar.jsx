@@ -42,7 +42,7 @@ function NavBar() {
               <Link to={"/home"} className="cursor-pointer">
                 Home
               </Link>
-              <span className="absolute -bottom-4.5 left-0 min-h-1.5 w-full bg-pink-800 opacity-0 group-hover:opacity-100" />
+              <span className="bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full opacity-0 group-hover:opacity-100" />
             </li>
 
             <li className="group relative cursor-pointer">
@@ -50,7 +50,7 @@ function NavBar() {
               <Link to={"/shop"} className="cursor-pointer">
                 Shop
               </Link>
-              <span className="absolute -bottom-4.5 left-0 min-h-1.5 w-full bg-pink-800 opacity-0 group-hover:opacity-100" />
+              <span className="bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full opacity-0 group-hover:opacity-100" />
             </li>
 
             <li className="group relative cursor-pointer">
@@ -58,18 +58,18 @@ function NavBar() {
               <Link to={"/about"} className="cursor-pointer">
                 About
               </Link>
-              <span className="absolute -bottom-4.5 left-0 min-h-1.5 w-full bg-pink-800 opacity-0 group-hover:opacity-100" />
+              <span className="bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full opacity-0 group-hover:opacity-100" />
             </li>
           </ul>
 
           <Link to={"/cart"} className="group relative cursor-pointer">
             <MdOutlineShoppingBag className="text-3xl text-gray-800" />
-            <span className="absolute -bottom-4.5 left-0 min-h-1.5 w-full bg-pink-800 opacity-0 group-hover:opacity-100" />
+            <span className="bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full opacity-0 group-hover:opacity-100" />
           </Link>
 
           <Link to={"/auth"} className="group relative cursor-pointer">
             <LuUser className="hidden text-3xl text-gray-800 md:flex" />
-            <span className="absolute -bottom-4.5 left-0 min-h-1.5 w-full bg-pink-800 opacity-0 group-hover:opacity-100" />
+            <span className="bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full opacity-0 group-hover:opacity-100" />
           </Link>
         </div>
       </div>
