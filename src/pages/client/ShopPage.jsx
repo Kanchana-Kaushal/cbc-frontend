@@ -2,12 +2,16 @@ import { MdOutlineShoppingBag } from "react-icons/md";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import cart from "../../utils/cart";
 
 function ShopPage() {
   const token = localStorage.getItem("token");
 
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isLoading) return;
@@ -25,9 +29,7 @@ function ShopPage() {
 
         setProducts(data.data.products);
         setIsLoading(false);
-      } catch (error) {
-        toast.error(error.response?.data?.message || "Something went wrong");
-      }
+      } catch (error) {}
     })();
   }, [isLoading]);
 
@@ -37,8 +39,16 @@ function ShopPage() {
     const discountRate = 100 - Math.round((sellingPrice / markedPrice) * 100);
 
     return (
-      <article className="max-w-80 cursor-pointer space-y-4 rounded-2xl p-5 shadow-xl ring-1 ring-gray-300">
-        <div className="aspect-square overflow-hidden rounded-xl">
+      <article
+        className="space-y-4 rounded-2xl p-5 shadow-xl ring-1 ring-gray-300 md:max-w-90"
+        key={product.productId}
+      >
+        <div
+          className="aspect-square cursor-pointer overflow-hidden rounded-xl"
+          onClick={() => {
+            navigate("/product/" + product._id);
+          }}
+        >
           <img
             src={product.images[0]}
             alt=""
@@ -61,13 +71,20 @@ function ShopPage() {
           </p>
         </div>
 
-        <button className="bg-accent mt-6 flex w-full cursor-pointer items-center justify-center gap-2 rounded-md p-4 py-2 text-lg font-bold text-white transition-all hover:scale-101 hover:opacity-85">
+        <button
+          className="bg-accent mt-6 flex w-full cursor-pointer items-center justify-center gap-2 rounded-md p-4 py-2 text-lg font-bold text-white transition-all hover:scale-101 hover:opacity-85"
+          onClick={() => {
+            cart.add(1, product);
+          }}
+        >
           <MdOutlineShoppingBag />
           Add to cart
         </button>
       </article>
     );
   });
+
+  console.log(cart.getQty());
 
   return (
     <main className="min-h-screen pt-25">

@@ -15,7 +15,7 @@ function NavBar() {
   }
 
   return (
-    <nav className="fixed z-50 w-full backdrop-blur-xl">
+    <nav className="fixed z-50 w-full backdrop-blur-3xl">
       <div className="mx-auto my-4 flex w-9/10 max-w-[1440px] items-center justify-between md:w-8/10">
         <motion.div
           animate={{ rotate: isMenuShown ? 180 : 0 }}

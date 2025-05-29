@@ -3,6 +3,7 @@ import NavBar from "../components/NavBar";
 import Home from "./client/Home";
 import Auth from "./client/Auth";
 import ShopPage from "./client/ShopPage";
+import SingleProdPage from "./client/SingleProdPage";
 
 function MainPage() {
   return (
@@ -13,6 +14,7 @@ function MainPage() {
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/product/:id" element={<SingleProdPage />} />
           <Route path="/auth" element={<Auth />} />
         </Routes>
       </div>
