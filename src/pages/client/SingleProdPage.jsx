@@ -102,7 +102,7 @@ function SingleProdPage() {
                     <img
                       key={index}
                       src={image}
-                      className={`size-20 rounded-sm object-cover ring-3 ${prodImageIndex === index ? "ring-accent" : "ring-gray-300"}`}
+                      className={`size-20 cursor-pointer rounded-sm object-cover ring-3 ${prodImageIndex === index ? "ring-accent" : "ring-gray-300"}`}
                       onClick={() => {
                         setProdImageIndex(index);
                       }}
@@ -131,7 +131,7 @@ function SingleProdPage() {
                   </p>
                 </div>
 
-                <div className="gap-4 md:mt-12 md:flex">
+                <div className="gap-4 space-y-4 md:mt-12 md:flex md:space-y-0">
                   <div className="flex justify-between rounded-md bg-gray-200 p-3 md:w-4/10">
                     <button onClick={decreaseQty}>
                       <FaMinus className="text-accent cursor-pointer" />
@@ -145,7 +145,7 @@ function SingleProdPage() {
                   </div>
 
                   <button
-                    className="bg-accent flex w-full cursor-pointer items-center justify-center gap-4 rounded-md p-3 text-lg font-bold text-white shadow-xl transition-all hover:scale-101 hover:opacity-95 md:w-6/10"
+                    className="bg-accent flex w-full cursor-pointer items-center justify-center gap-4 rounded-md p-3 text-lg font-bold text-white transition-all hover:scale-101 hover:opacity-95 md:w-6/10"
                     onClick={() => {
                       cart.add(qty, product);
                       setQty(0);
@@ -158,7 +158,7 @@ function SingleProdPage() {
 
                 <div className="relative my-10">
                   <hr className="text-gray-300" />
-                  <p className="bg-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-1 text-gray-400">
+                  <p className="bg-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-1 text-sm text-gray-400">
                     OR
                   </p>
                 </div>

@@ -4,6 +4,7 @@ import Home from "./client/Home";
 import Auth from "./client/Auth";
 import ShopPage from "./client/ShopPage";
 import SingleProdPage from "./client/SingleProdPage";
+import CartPage from "./client/CartPage";
 
 function MainPage() {
   return (
@@ -15,6 +16,7 @@ function MainPage() {
           <Route path="/home" element={<Home />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/product/:id" element={<SingleProdPage />} />
+          <Route path="/cart" element={<CartPage />} />
           <Route path="/auth" element={<Auth />} />
         </Routes>
       </div>

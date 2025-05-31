@@ -1,7 +1,6 @@
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import cart from "../../utils/cart";
 
@@ -60,9 +59,9 @@ function ShopPage() {
 
         <div className="flex items-center justify-between">
           <p className="text-3xl font-extrabold">
-            ${markedPrice.toFixed(2)}
+            ${sellingPrice.toFixed(2)}
             <span className="ml-2 text-base font-normal text-gray-700 line-through">
-              ${sellingPrice}
+              ${markedPrice.toFixed(2)}
             </span>
           </p>
 
@@ -84,7 +83,7 @@ function ShopPage() {
     );
   });
 
-  console.log(cart.getQty());
+  console.log(localStorage.getItem("cart"));
 
   return (
     <main className="min-h-screen pt-25">
