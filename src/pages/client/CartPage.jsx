@@ -1,34 +1,25 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { MdOutlinePayment } from "react-icons/md";
-import { div } from "motion/react-client";
+import cart from "../../utils/cart.js";
 
 function CartPage() {
-  const [cart, setCart] = useState([]);
-  const [isCartLoading, setIsCartLoading] = useState(true);
+  const [cartItems, setCartItems] = useState(cart.get);
 
   const navigate = useNavigate();
 
   let total = 0;
 
-  if (cart.length > 0) {
-    cart.forEach((item) => {
+  if (cartItems.length > 0) {
+    cartItems.forEach((item) => {
       total += item.qty * item.priceCents;
     });
   }
 
-  useEffect(() => {
-    if (isCartLoading === true) {
-      const cartJSON = localStorage.getItem("cart");
-      setCart(JSON.parse(cartJSON));
-      setIsCartLoading(false);
-    }
-  }, [isCartLoading]);
-
   function decreaseQty(productId) {
-    const newCart = cart.map((item) => {
+    const newCart = cartItems.map((item) => {
       if (item.productId === productId) {
         if (item.qty <= 1) {
           return;
@@ -42,27 +33,19 @@ function CartPage() {
 
     const cleanedCart = newCart.filter(Boolean);
 
-    const cartString = JSON.stringify(cleanedCart);
-
-    localStorage.setItem("cart", cartString);
-
-    setIsCartLoading(true);
+    setCartItems(cart.save(cleanedCart));
   }
 
   function increaseQty(productId) {
-    const newCart = cart.map((item) =>
+    const newCart = cartItems.map((item) =>
       item.productId === productId ? { ...item, qty: item.qty + 1 } : item,
     );
 
-    const cartString = JSON.stringify(newCart);
-
-    localStorage.setItem("cart", cartString);
-
-    setIsCartLoading(true);
+    setCartItems(cart.save(newCart));
   }
 
   function CartItems() {
-    return cart.map((item) => {
+    return cartItems.map((item) => {
       const priceCents = item.priceCents;
       const totalPriceCents = priceCents * item.qty;
       const price = (priceCents / 100).toFixed(2);
@@ -128,7 +111,7 @@ function CartPage() {
     <>
       <main className="mx-auto min-h-screen w-9/10 pt-15 md:w-8/10 md:overflow-y-hidden md:p-4 md:pt-0">
         <div className="">
-          {cart.length === 0 ? (
+          {cartItems.length === 0 ? (
             <div className="mx-auto mt-40 space-y-6 rounded-md p-8 ring-1 ring-gray-400 md:max-w-xl">
               <h1 className="text-center text-gray-700">
                 There is no item to show right now, Add some items to the cart

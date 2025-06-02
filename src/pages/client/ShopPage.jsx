@@ -83,8 +83,6 @@ function ShopPage() {
     );
   });
 
-  console.log(localStorage.getItem("cart"));
-
   return (
     <main className="min-h-screen pt-25">
       {isLoading ? (

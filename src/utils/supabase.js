@@ -15,7 +15,7 @@ export const uploadMedia = async (file) => {
     const newName = `${timeStamp}_${file.name}`;
 
     const { error: uploadError } = await supabase.storage
-      .from("images")
+      .from("cbc-images")
       .upload(newName, file, {
         upsert: false,
         cacheControl: "3600",
@@ -28,11 +28,13 @@ export const uploadMedia = async (file) => {
     const {
       data: { publicUrl },
       error: urlError,
-    } = supabase.storage.from("images").getPublicUrl(newName);
+    } = supabase.storage.from("cbc-images").getPublicUrl(newName);
 
     if (urlError) {
       throw urlError;
     }
+
+    console.log(publicUrl);
 
     return publicUrl;
   } catch (error) {

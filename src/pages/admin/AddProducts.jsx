@@ -37,6 +37,7 @@ function AddProductsPage() {
     const imageUrls = await Promise.all(
       filteredImages.map(async (image) => {
         const url = await uploadMedia(image);
+
         return url;
       }),
     );
