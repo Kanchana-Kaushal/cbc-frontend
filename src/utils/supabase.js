@@ -34,8 +34,6 @@ export const uploadMedia = async (file) => {
       throw urlError;
     }
 
-    console.log(publicUrl);
-
     return publicUrl;
   } catch (error) {
     console.error("Upload failed:", error);

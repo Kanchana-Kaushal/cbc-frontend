@@ -25,7 +25,9 @@ function SignUpForm(props) {
       toast.success("User created successfully");
 
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", response.data.user);
+
+      const user = JSON.stringify(response.data.data.user);
+      localStorage.setItem("user", user);
 
       navigate("/home");
     } catch (err) {

@@ -130,14 +130,25 @@ function CartPage() {
             <>
               <div className="space-y-4 md:flex">
                 <div className="space-y-4 overflow-y-scroll md:max-h-screen md:min-h-screen md:w-6/10 md:p-4 md:pt-12">
-                  <h1 className="mt-12 mb-6 text-center text-2xl font-bold md:text-left">
-                    My Cart
-                  </h1>
+                  <div className="mx-auto mt-12 mb-6 flex w-9/10 items-center justify-between">
+                    <h1 className="text-center text-2xl font-bold md:text-left">
+                      My Cart
+                    </h1>
+
+                    <button
+                      className="hover:bg-accent cursor-pointer rounded-xs px-2 text-sm text-gray-500 ring-1 ring-gray-400 transition-colors hover:text-white"
+                      onClick={() => {
+                        setCartItems(cart.save([]));
+                      }}
+                    >
+                      Clear
+                    </button>
+                  </div>
                   <CartItems />
                 </div>
 
                 <div className="items-center justify-center md:flex md:w-4/10">
-                  <div className="mb-4 space-y-2 rounded-xl bg-white p-8 ring-1 ring-gray-300 md:min-w-90">
+                  <div className="mx-auto mb-4 space-y-2 rounded-xl bg-white p-8 ring-1 ring-gray-300 lg:w-8/10">
                     <h2 className="mb-6 text-center text-xl">Cart Summery</h2>
 
                     <div className="flex items-center justify-between font-bold">
@@ -157,7 +168,12 @@ function CartPage() {
                       <p>${((total + 499) / 100).toFixed(2)}</p>
                     </div>
 
-                    <button className="bg-accent mt-6 flex w-full cursor-pointer items-center justify-center gap-4 rounded-md px-4 py-2 text-white">
+                    <button
+                      className="bg-accent mt-6 flex w-full cursor-pointer items-center justify-center gap-4 rounded-md px-4 py-2 text-white"
+                      onClick={() => {
+                        navigate("/checkout", { state: cartItems });
+                      }}
+                    >
                       <MdOutlinePayment />
                       Checkout
                     </button>
