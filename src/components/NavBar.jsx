@@ -32,14 +32,14 @@ function NavBar() {
           )}
         </motion.div>
 
-        <Link to={"/home"} className="cursor-pointer">
+        <Link to={"/"} className="cursor-pointer">
           <img src="/logo.png" alt="cbc logo" className="z-50 max-w-50" />
         </Link>
 
         <div className="flex items-center md:gap-8">
           <ul className="hidden items-center gap-8 text-lg font-semibold tracking-wide text-gray-800 md:flex">
             <li className="group relative cursor-pointer">
-              <Link to={"/home"} className="cursor-pointer">
+              <Link to={"/"} className="cursor-pointer">
                 Home
               </Link>
               <span className="bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full opacity-0 group-hover:opacity-100" />

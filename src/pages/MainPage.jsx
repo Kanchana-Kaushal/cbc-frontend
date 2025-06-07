@@ -14,7 +14,7 @@ function MainPage() {
 
       <div className="font-lato bg-primary text-font">
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/product/:id" element={<SingleProdPage />} />
           <Route path="/cart" element={<CartPage />} />
