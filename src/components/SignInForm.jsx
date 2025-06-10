@@ -31,7 +31,7 @@ function SignInForm({ toggleAuth }) {
       if (response.data.data.user.role === "admin") {
         navigate("/admin");
       } else {
-        navigate("/home");
+        navigate("/");
       }
     } catch (err) {
       toast.error(err.response.data.error);

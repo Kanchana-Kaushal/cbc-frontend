@@ -6,12 +6,50 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
+import { FaEdit } from "react-icons/fa";
+import { uploadMedia } from "../utils/supabase";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 function NavBar() {
+  const user = JSON.parse(localStorage.getItem("user")) || null;
+  const token = localStorage.getItem("token");
+  const username = user?.username || "User";
+  const email = user?.email || "Please sign in to see your details";
+  const userId = user?.userId || null;
+  const preAvatar = user?.avatar || null;
+
   const [isMenuShown, setIsMenuShown] = useState(false);
+  const [userPopupShown, setUserPopupShown] = useState(false);
+  const [avatar, setAvatar] = useState(preAvatar);
+
+  const handleFileChange = async (e) => {
+    const selectedFile = e.target.files[0]; // Get the first selected file
+    if (selectedFile) {
+      try {
+        const url = await uploadMedia(selectedFile);
+
+        const response = await axios.put(
+          `${import.meta.env.VITE_BACKEND_URL}/api/users/user/${userId}/update-user`,
+          { avatar: url },
+          { headers: { Authorization: "Bearer " + token } },
+        );
+
+        setAvatar(response.data.data.user.avatar);
+        localStorage.setItem("user", JSON.stringify(response.data.data.user));
+        toast.success("Avatar updated successfully");
+      } catch (err) {
+        toast.error(err.message);
+      }
+    }
+  };
 
   function toggleMenu() {
     setIsMenuShown((prev) => !prev);
+  }
+
+  function toggleUserPopup() {
+    setUserPopupShown((prev) => !prev);
   }
 
   return (
@@ -67,10 +105,84 @@ function NavBar() {
             <span className="bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full opacity-0 group-hover:opacity-100" />
           </Link>
 
-          <Link to={"/auth"} className="group relative cursor-pointer">
-            <LuUser className="hidden text-3xl text-gray-800 md:flex" />
-            <span className="bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full opacity-0 group-hover:opacity-100" />
-          </Link>
+          {user ? (
+            <div className="relative">
+              <img
+                src={avatar}
+                className="hidden size-10 cursor-pointer rounded-full md:block"
+                onClick={toggleUserPopup}
+              />
+
+              {/* User Popup */}
+              <AnimatePresence>
+                {userPopupShown && (
+                  <motion.div
+                    className="animate-fade-in absolute top-14 right-4 w-72 rounded-xl bg-white shadow-lg ring-1 ring-gray-200"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                  >
+                    <IoMdClose
+                      className="absolute top-3 right-3 cursor-pointer text-2xl text-gray-500 hover:text-gray-900"
+                      onClick={() => {
+                        setUserPopupShown(false);
+                      }}
+                    />
+                    <div className="flex flex-col items-center px-6 py-5">
+                      <div className="relative">
+                        <img
+                          src={avatar}
+                          alt="User Avatar"
+                          className="h-20 w-20 rounded-full border border-gray-300 object-cover shadow-sm"
+                        />
+
+                        <label htmlFor="avatar">
+                          <FaEdit className="absolute -right-2 bottom-0 cursor-pointer text-gray-500 hover:text-gray-900" />
+                          <input
+                            type="file"
+                            id="avatar"
+                            className="hidden"
+                            accept="image/*"
+                            multiple={false}
+                            onChange={handleFileChange}
+                          />
+                        </label>
+                      </div>
+                      <div className="mt-3 text-center">
+                        <p className="text-base font-semibold text-gray-900">
+                          {username}
+                        </p>
+                        <p className="text-sm text-gray-500">{email}</p>
+                      </div>
+                    </div>
+
+                    <div className="px-6">
+                      <Link
+                        to="/my-orders"
+                        className="hover:bg-accent block w-full rounded-md bg-gray-100 py-2 text-center text-sm font-medium text-gray-700 transition hover:text-white"
+                      >
+                        My Orders
+                      </Link>
+
+                      <Link
+                        to="/auth"
+                        className="mt-3 block text-center text-xs text-gray-400 transition hover:text-gray-600"
+                      >
+                        Use a different account?
+                      </Link>
+                    </div>
+
+                    <div className="mt-5 border-t border-gray-100" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ) : (
+            <Link to={"/auth"} className="group relative cursor-pointer">
+              <LuUser className="hidden text-3xl text-gray-800 md:flex" />
+              <span className="bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full opacity-0 group-hover:opacity-100" />
+            </Link>
+          )}
         </div>
       </div>
 
@@ -91,13 +203,33 @@ function NavBar() {
               >
                 <div>
                   <p className="text-lg font-bold text-gray-800 uppercase">
-                    Kanchana Kaushal
+                    {username || "Login"}
                   </p>
-                  <p className="text-sm text-gray-500">
-                    kanchanakaushal200@gmail.com
-                  </p>
+                  <p className="text-sm text-gray-500">{email || "Login"}</p>
                 </div>
-                <FaUserCircle className="text-5xl text-gray-800" />
+                {avatar ? (
+                  <div className="relative mr-4">
+                    <img
+                      src={avatar}
+                      alt="User Avatar"
+                      className="h-15 w-15 rounded-full border border-gray-300 object-cover shadow-sm"
+                    />
+
+                    <label htmlFor="avatar">
+                      <FaEdit className="absolute top-0 -right-3 cursor-pointer text-xl text-gray-500 hover:text-gray-900" />
+                      <input
+                        type="file"
+                        id="avatar"
+                        className="hidden"
+                        accept="image/*"
+                        multiple={false}
+                        onChange={handleFileChange}
+                      />
+                    </label>
+                  </div>
+                ) : (
+                  <FaUserCircle className="text-5xl text-gray-800" />
+                )}
               </Link>
 
               <hr className="my-6 text-gray-500" />
