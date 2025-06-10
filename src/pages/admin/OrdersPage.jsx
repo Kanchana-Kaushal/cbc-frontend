@@ -124,6 +124,11 @@ function OrdersPage() {
                     <tr
                       key={orderId}
                       className="cursor-pointer transition hover:bg-gray-50"
+                      onClick={() => {
+                        navigate("/admin/order-info", {
+                          state: { orderId },
+                        });
+                      }}
                     >
                       <td className="px-6 py-4 text-center text-sm text-gray-700">
                         {orderId}

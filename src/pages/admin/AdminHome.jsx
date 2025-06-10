@@ -1,5 +1,11 @@
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import {
+  Link,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import { useEffect, useState } from "react";
 import ProductsPage from "./Products";
 import AddProductsPage from "./AddProducts";
 import EditProductPage from "./EditProductsPage";
@@ -7,10 +13,12 @@ import UserPage from "./UsersPage";
 import AdminPage from "./AdminsPage";
 import CreateAdminPage from "./RegisterAdmin";
 import OrdersPage from "./OrdersPage";
+import DisplayOrderPage from "./DisplayOrderPage";
 
 function AdminHome() {
   const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     navigate("/admin/orders");
@@ -34,18 +42,38 @@ function AdminHome() {
 
           <hr className="mt-4 mb-12" />
 
-          <ul className="space-y-6 text-lg font-semibold">
-            <li>
-              <Link to={"/admin/orders"}>Orders</Link>
+          <ul className="w-full space-y-6 text-lg font-semibold">
+            <li className="w-full">
+              <Link
+                className={`cursor-pointer rounded-lg p-2 text-gray-800 ring-1 ring-gray-300 ${location.pathname.includes("orders") ? "bg-blue-500 text-white" : "bg-gray-100"} block`}
+                to={"/admin/orders"}
+              >
+                Orders
+              </Link>
             </li>
             <li>
-              <Link to={"/admin/products"}>Products</Link>
+              <Link
+                className={`cursor-pointer rounded-lg p-2 text-gray-800 ring-1 ring-gray-300 ${location.pathname.includes("products") ? "bg-blue-500 text-white" : "bg-gray-100"} block`}
+                to={"/admin/products"}
+              >
+                Products
+              </Link>
             </li>
             <li>
-              <Link to={"/admin/users"}>Users</Link>
+              <Link
+                className={`cursor-pointer rounded-lg p-2 text-gray-800 ring-1 ring-gray-300 ${location.pathname.includes("users") ? "bg-blue-500 text-white" : "bg-gray-100"} block`}
+                to={"/admin/users"}
+              >
+                Users
+              </Link>
             </li>
             <li>
-              <Link to={"/admin/admins"}>Admins</Link>
+              <Link
+                className={`cursor-pointer rounded-lg p-2 text-gray-800 ring-1 ring-gray-300 ${location.pathname.includes("admins") ? "bg-blue-500 text-white" : "bg-gray-100"} block`}
+                to={"/admin/admins"}
+              >
+                Admins
+              </Link>
             </li>
           </ul>
 
@@ -58,7 +86,8 @@ function AdminHome() {
 
         <main className="h-screen flex-8/10 overflow-y-scroll bg-gray-50 p-8 inset-shadow-sm">
           <Routes>
-            <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/orders/" element={<OrdersPage />} />
+            <Route path="/order-info" element={<DisplayOrderPage />} />
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/add-products" element={<AddProductsPage />} />
             <Route path="/edit-products" element={<EditProductPage />} />
