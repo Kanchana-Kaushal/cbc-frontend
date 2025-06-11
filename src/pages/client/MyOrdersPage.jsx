@@ -3,13 +3,21 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { FiPackage, FiCalendar, FiMapPin, FiCreditCard } from "react-icons/fi";
+import MyOrderModal from "../../components/MyOrdersModal";
 
 function MyOrdersPage() {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
+
+  function openModal(orderData) {
+    setSelectedOrder(orderData);
+    setIsOpen(true);
+  }
 
   const navigate = useNavigate();
 
@@ -57,12 +65,12 @@ function MyOrdersPage() {
         return "bg-green-100 text-green-800 border-green-200";
       case "pending":
         return "bg-yellow-100 text-yellow-800 border-yellow-200";
-      case "shipped":
-        return "bg-blue-100 text-blue-800 border-blue-200";
       case "delivered":
         return "bg-emerald-100 text-emerald-800 border-emerald-200";
       case "cancelled":
         return "bg-red-100 text-red-800 border-red-200";
+      case "in-transit":
+        return "bg-blue-100 text-blue-800 border-blue-200";
       default:
         return "bg-gray-100 text-gray-800 border-gray-200";
     }
@@ -114,6 +122,20 @@ function MyOrdersPage() {
                   <p className="text-gray-600">View and track your orders</p>
                 </div>
 
+                {/* Order Details Modal */}
+                <MyOrderModal
+                  selectedOrder={selectedOrder}
+                  setIsLoading={setIsLoading}
+                  setSelectedOrder={setSelectedOrder}
+                  setIsOpen={setIsOpen}
+                  formatPrice={formatPrice}
+                  formatDate={formatDate}
+                  getStatusColor={getStatusColor}
+                  calculateOrderTotal={calculateOrderTotal}
+                  modalIsOpen={modalIsOpen}
+                  token={token}
+                />
+
                 {/* Orders Grid */}
                 <div className="grid gap-4 md:gap-6">
                   {orders.map((orderData, index) => {
@@ -125,8 +147,7 @@ function MyOrdersPage() {
                         key={order._id}
                         className="cursor-pointer rounded-lg border border-gray-200 bg-white p-6 transition-all duration-200 hover:border-gray-300 hover:shadow-md"
                         onClick={() => {
-                          // Handle order selection - navigate to order details
-                          console.log("Selected order:", order.orderId);
+                          openModal(orderData);
                         }}
                       >
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
