@@ -24,12 +24,11 @@ function SignUpForm(props) {
 
       toast.success("User created successfully");
 
-      localStorage.setItem("token", response.data.token);
-
+      localStorage.setItem("token", response.data.data.token);
       const user = JSON.stringify(response.data.data.user);
       localStorage.setItem("user", user);
 
-      navigate("/home");
+      navigate("/");
     } catch (err) {
       toast.error(err.response.data.error);
     }

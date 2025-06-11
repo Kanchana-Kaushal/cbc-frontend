@@ -6,6 +6,7 @@ import ShopPage from "./client/ShopPage";
 import SingleProdPage from "./client/SingleProdPage";
 import CartPage from "./client/CartPage";
 import CheckoutPage from "./client/CheckoutPage";
+import MyOrdersPage from "./client/MyOrdersPage";
 
 function MainPage() {
   return (
@@ -20,6 +21,7 @@ function MainPage() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/my-orders" element={<MyOrdersPage />} />
         </Routes>
       </div>
     </>

@@ -160,6 +160,9 @@ function NavBar() {
                       <Link
                         to="/my-orders"
                         className="hover:bg-accent block w-full rounded-md bg-gray-100 py-2 text-center text-sm font-medium text-gray-700 transition hover:text-white"
+                        onClick={() => {
+                          setUserPopupShown(false);
+                        }}
                       >
                         My Orders
                       </Link>
@@ -167,6 +170,9 @@ function NavBar() {
                       <Link
                         to="/auth"
                         className="mt-3 block text-center text-xs text-gray-400 transition hover:text-gray-600"
+                        onClick={() => {
+                          setUserPopupShown(false);
+                        }}
                       >
                         Use a different account?
                       </Link>
