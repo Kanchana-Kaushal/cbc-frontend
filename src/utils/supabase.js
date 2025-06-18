@@ -40,3 +40,24 @@ export const uploadMedia = async (file) => {
     return null;
   }
 };
+
+export const deleteMedia = async (fileName) => {
+  try {
+    if (!fileName) {
+      throw new Error("File name is required to delete");
+    }
+
+    const { error: deleteError } = await supabase.storage
+      .from("cbc-images")
+      .remove([fileName]);
+
+    if (deleteError) {
+      throw deleteError;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Delete failed:", error);
+    return false;
+  }
+};

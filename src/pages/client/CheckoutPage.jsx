@@ -79,7 +79,7 @@ function CheckoutPage() {
       toast.success("Order Placed Successfully");
       cart.save([]);
 
-      navigate("/shop");
+      navigate("/my-orders");
     } catch (err) {
       toast.error(
         err.response?.data?.error ||

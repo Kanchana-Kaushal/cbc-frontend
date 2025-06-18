@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import { LuUser } from "react-icons/lu";
@@ -7,27 +7,34 @@ import { IoMdClose } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { FaEdit } from "react-icons/fa";
-import { uploadMedia } from "../utils/supabase";
+import { deleteMedia, uploadMedia } from "../utils/supabase";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 function NavBar() {
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    if (setIsLoading) {
+      setIsLoading(false);
+    }
+  }, [isLoading]);
+
   const user = JSON.parse(localStorage.getItem("user")) || null;
   const token = localStorage.getItem("token");
   const username = user?.username || "User";
   const email = user?.email || "Please sign in to see your details";
   const userId = user?.userId || null;
-  const preAvatar = user?.avatar || null;
+  const avatar = user?.avatar || null;
 
   const [isMenuShown, setIsMenuShown] = useState(false);
   const [userPopupShown, setUserPopupShown] = useState(false);
-  const [avatar, setAvatar] = useState(preAvatar);
 
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0]; // Get the first selected file
     if (selectedFile) {
       try {
         const url = await uploadMedia(selectedFile);
+        const existingAvatarUrl = avatar;
 
         const response = await axios.put(
           `${import.meta.env.VITE_BACKEND_URL}/api/users/user/${userId}/update-user`,
@@ -35,8 +42,9 @@ function NavBar() {
           { headers: { Authorization: "Bearer " + token } },
         );
 
-        setAvatar(response.data.data.user.avatar);
+        deleteMedia(existingAvatarUrl);
         localStorage.setItem("user", JSON.stringify(response.data.data.user));
+        setIsLoading(true);
         toast.success("Avatar updated successfully");
       } catch (err) {
         toast.error(err.message);
