@@ -64,7 +64,7 @@ function AdminPage() {
 
   const banUser = async (userId, banned) => {
     try {
-      await axios.put(
+      const response = await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/ban-user`,
         { userId, banned },
         {
@@ -73,7 +73,8 @@ function AdminPage() {
           },
         },
       );
-      toast.success("User banned successfully");
+      toast.success(response.data.message);
+
       setIsLoading(true);
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to ban user");

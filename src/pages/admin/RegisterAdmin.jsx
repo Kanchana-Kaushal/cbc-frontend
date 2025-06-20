@@ -161,7 +161,7 @@ function CreateAdminPage() {
 
       <button
         type="submit"
-        className="w-full rounded-md bg-blue-600 p-3 text-white hover:bg-blue-700"
+        className="w-full cursor-pointer rounded-md bg-blue-600 p-3 text-white hover:bg-blue-700"
       >
         Create Admin
       </button>

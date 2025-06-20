@@ -14,6 +14,8 @@ import AdminPage from "./AdminsPage";
 import CreateAdminPage from "./RegisterAdmin";
 import OrdersPage from "./OrdersPage";
 import DisplayOrderPage from "./DisplayOrderPage";
+import ProductReviews from "./ProductReviews";
+import ManageReviews from "./ManageReviews";
 
 function AdminHome() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -75,6 +77,14 @@ function AdminHome() {
                 Admins
               </Link>
             </li>
+            <li>
+              <Link
+                className={`cursor-pointer rounded-lg p-2 text-gray-800 ring-1 ring-gray-300 ${location.pathname.includes("reviews") ? "bg-blue-500 text-white" : "bg-gray-100"} block`}
+                to={"/admin/reviews"}
+              >
+                Reviews
+              </Link>
+            </li>
           </ul>
 
           <Link to={"/auth"}>
@@ -91,6 +101,8 @@ function AdminHome() {
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/add-products" element={<AddProductsPage />} />
             <Route path="/edit-products" element={<EditProductPage />} />
+            <Route path="/reviews" element={<ProductReviews />} />
+            <Route path="/manage-reviews" element={<ManageReviews />} />
             <Route path="/users" element={<UserPage />} />
             <Route path="/admins" element={<AdminPage />} />
             <Route path="/admins/add-admin" element={<CreateAdminPage />} />

@@ -1,11 +1,13 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function UserPage() {
+function ProductReviews() {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
-  const [users, setUsers] = useState([]);
+  const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -14,7 +16,7 @@ function UserPage() {
     (async () => {
       try {
         const { data } = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/users/`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/products/`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -22,7 +24,7 @@ function UserPage() {
           },
         );
 
-        setUsers(data.data.users);
+        setProducts(data.data.products);
         setIsLoading(false);
       } catch (error) {
         toast.error(error.response?.data?.message || "Something went wrong");
@@ -30,59 +32,50 @@ function UserPage() {
     })();
   }, [isLoading]);
 
-  const tableContent = users.map((user) => {
-    const { _id, username, avatar, email, role, banned } = user;
+  const tableContent = products.map((product) => {
+    const { productId, images, name, inventory } = product;
+    const isAvailable = inventory.available;
+    const reviews = product.reviews;
+
+    if (reviews.length === 0) {
+      return undefined;
+    }
 
     return (
-      <tr key={_id} className="cursor-pointer transition hover:bg-gray-50">
+      <tr
+        key={productId}
+        className="cursor-pointer transition hover:bg-gray-50"
+        onClick={() => {
+          navigate("/admin/manage-reviews", {
+            state: { reviews, productId: product._id },
+          });
+        }}
+      >
         <td className="px-6 py-4">
-          <img
-            src={avatar}
-            alt="avatar"
-            className="h-10 w-10 rounded-full object-cover object-center"
+          <div
+            className={`ml-4 h-3 w-3 rounded-full ${
+              isAvailable ? "bg-green-600" : "bg-red-600"
+            }`}
           />
         </td>
-        <td className="px-6 py-4 text-sm text-gray-700">{username}</td>
-        <td className="px-6 py-4 text-sm text-gray-700">{email}</td>
-        <td className="px-6 py-4 text-sm text-gray-700 capitalize">{role}</td>
-        <td className="">
-          <button
-            className={`${banned && "bg-red-400 text-white"} min-w-20 cursor-pointer rounded-md p-1 font-semibold ring-1 ring-gray-300 hover:bg-red-400 hover:text-white`}
-            onClick={() => {
-              banUser(_id, !banned);
-            }}
-          >
-            {banned ? "Unban" : "Ban"}
-          </button>
+        <td className="px-6 py-4 text-sm text-gray-700">{productId}</td>
+        <td className="px-6 py-4 text-sm text-gray-700">
+          <img
+            src={images[0]}
+            alt="product"
+            className="size-15 object-cover object-center"
+          />
         </td>
+        <td className="px-6 py-4 text-sm text-gray-700">{name}</td>
+        <td className="px-6 py-4 text-sm text-gray-700">{reviews.length}</td>
       </tr>
     );
   });
 
-  const banUser = async (userId, banned) => {
-    try {
-      const response = await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/ban-user`,
-        { userId, banned },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
-      toast.success(response.data.message);
-      setIsLoading(true);
-    } catch (error) {
-      console.log(response);
-      toast.error(error.response?.data?.message || "Failed to ban user");
-    }
-  };
-
   return (
     <>
       <section className="relative">
-        <h1 className="text-3xl font-bold">Users</h1>
+        <h1 className="text-3xl font-bold">Products</h1>
         <hr className="mt-4 mb-8" />
 
         {isLoading ? (
@@ -93,7 +86,7 @@ function UserPage() {
           <table className="min-w-full divide-y divide-gray-200 overflow-hidden rounded-lg shadow-lg">
             <thead className="bg-gray-100">
               <tr>
-                {["Avatar", "Username", "Email", "Role", "Action"].map(
+                {["Status", "Product ID", "Image", "Name", "Reviews"].map(
                   (header) => (
                     <th
                       key={header}
@@ -115,4 +108,4 @@ function UserPage() {
   );
 }
 
-export default UserPage;
+export default ProductReviews;

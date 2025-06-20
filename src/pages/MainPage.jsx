@@ -7,6 +7,7 @@ import SingleProdPage from "./client/SingleProdPage";
 import CartPage from "./client/CartPage";
 import CheckoutPage from "./client/CheckoutPage";
 import MyOrdersPage from "./client/MyOrdersPage";
+import Footer from "../components/Footer";
 
 function MainPage() {
   return (
@@ -24,6 +25,8 @@ function MainPage() {
           <Route path="/my-orders" element={<MyOrdersPage />} />
         </Routes>
       </div>
+
+      <Footer />
     </>
   );
 }
