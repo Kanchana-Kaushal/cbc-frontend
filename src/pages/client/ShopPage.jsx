@@ -39,63 +39,111 @@ function ShopPage() {
 
     return (
       <article
-        className="space-y-4 rounded-2xl p-5 shadow-xl ring-1 ring-gray-300 md:max-w-90"
+        className="group relative overflow-hidden rounded-lg border border-white/50 bg-white/80 p-0 shadow-lg backdrop-blur-sm transition-all duration-300 hover:border-gray-200 hover:shadow-2xl"
         key={product.productId}
       >
+        {/* Discount Badge */}
+        {discountRate > 0 && (
+          <div className="absolute top-2 left-2 z-10 rounded-full bg-gradient-to-r from-red-500 to-pink-500 px-1.5 py-0.5 text-[0.6rem] font-bold text-white shadow-lg md:top-3 md:left-3 md:px-3 md:py-1">
+            -{discountRate}%
+          </div>
+        )}
+
+        {/* Product Image */}
         <div
-          className="aspect-square cursor-pointer overflow-hidden rounded-xl"
+          className="relative aspect-square cursor-pointer overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100"
           onClick={() => {
             navigate("/product/" + product._id);
           }}
         >
           <img
             src={product.images[0]}
-            alt=""
-            className="rounded-xl object-cover transition-all hover:scale-110"
+            alt={product.name}
+            className="h-full w-full object-cover transition-all duration-700 group-hover:scale-105"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         </div>
 
-        <h2 className="min-h-15 text-xl">{product.name}</h2>
+        {/* Product Info */}
+        <div className="space-y-2 p-3 md:space-y-3 md:p-4">
+          <h2 className="line-clamp-2 text-sm text-gray-900 md:min-h-[3rem] md:text-base">
+            {product.name}
+          </h2>
 
-        <div className="flex items-center justify-between">
-          <p className="text-3xl font-extrabold">
-            ${sellingPrice.toFixed(2)}
-            <span className="ml-2 text-base font-normal text-gray-700 line-through">
-              ${markedPrice.toFixed(2)}
-            </span>
-          </p>
+          {/* Price Section */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-baseline justify-between space-x-1 md:space-x-2">
+              <p className="font-bold text-gray-900 md:text-xl">
+                ${sellingPrice.toFixed(2)}
+              </p>
+              {markedPrice !== sellingPrice && (
+                <span className="text-xs text-gray-500 line-through md:text-sm">
+                  ${markedPrice.toFixed(2)}
+                </span>
+              )}
+            </div>
+          </div>
 
-          <p className="bg-accent text-primary w-fit rounded-md p-1 py-0.5 text-xs font-semibold">
-            {discountRate}%
-          </p>
+          {/* Add to Cart Button */}
+          <button
+            className="ring-accent text-accent group hover:bg-accent relative w-full cursor-pointer overflow-hidden rounded-sm p-1.5 text-sm font-semibold ring-1 transition-all duration-300 hover:scale-[1.02] hover:text-white hover:shadow-lg active:scale-[0.98] md:p-2 md:text-base"
+            onClick={() => {
+              cart.add(1, product);
+            }}
+          >
+            <div className="relative flex items-center justify-center gap-1.5 md:gap-2">
+              <MdOutlineShoppingBag className="text-base transition-transform duration-300 group-hover:scale-110 md:text-lg" />
+              <span className="hidden md:inline">Add to Cart</span>
+              <span className="md:hidden">Add</span>
+            </div>
+          </button>
         </div>
-
-        <button
-          className="bg-accent mt-6 flex w-full cursor-pointer items-center justify-center gap-2 rounded-md p-4 py-2 text-lg font-bold text-white transition-all hover:scale-101 hover:opacity-85"
-          onClick={() => {
-            cart.add(1, product);
-          }}
-        >
-          <MdOutlineShoppingBag />
-          Add to cart
-        </button>
       </article>
     );
   });
 
   return (
-    <main className="min-h-screen pt-25">
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 pt-20 md:pt-25">
       {isLoading ? (
-        <div className="mt-50 flex h-full w-full items-center justify-center">
-          <div className="h-[70px] w-[70px] animate-spin rounded-full border-[5px] border-gray-300 border-t-blue-900" />
+        <div className="flex h-screen w-full items-center justify-center">
+          <div className="relative">
+            <div className="h-16 w-16 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600 md:h-20 md:w-20" />
+            <div className="absolute top-1/2 left-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-blue-100 md:h-12 md:w-12" />
+          </div>
         </div>
       ) : (
-        <>
-          <h1 className="text-center text-4xl">All Products</h1>
-          <section className="mx-auto mt-12 grid w-9/10 gap-8 md:w-8/10 md:grid-cols-2 xl:grid-cols-4">
+        <div className="container mx-auto px-3 pb-12 md:px-4 md:pb-16">
+          {/* Header Section */}
+          <div className="mb-8 text-center md:mb-16">
+            <h1 className="mb-2 text-3xl font-bold tracking-tight text-gray-900 md:mb-4 md:text-5xl">
+              All Products
+            </h1>
+            <div className="bg-accent mx-auto h-0.5 w-16 rounded-full md:h-1 md:w-24" />
+            <p className="mx-auto mt-3 max-w-2xl px-4 text-sm text-gray-600 md:mt-6 md:text-lg">
+              Discover our curated collection
+            </p>
+          </div>
+
+          {/* Products Grid */}
+          <section className="mx-auto grid max-w-7xl grid-cols-2 gap-3 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5">
             {productCards}
           </section>
-        </>
+
+          {/* Empty State */}
+          {products.length === 0 && (
+            <div className="py-12 text-center md:py-20">
+              <div className="mb-3 text-gray-400 md:mb-4">
+                <MdOutlineShoppingBag className="mx-auto text-4xl md:text-6xl" />
+              </div>
+              <h3 className="mb-1 text-lg font-semibold text-gray-600 md:mb-2 md:text-xl">
+                No products found
+              </h3>
+              <p className="text-sm text-gray-500 md:text-base">
+                Check back later for new arrivals
+              </p>
+            </div>
+          )}
+        </div>
       )}
     </main>
   );

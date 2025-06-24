@@ -154,35 +154,37 @@ function ProductReviews({ reviews, productId, setIsLoading } = props) {
           <section className="mt-8 space-y-6">
             <h2 className="text-lg font-semibold">Customer Reviews</h2>
 
-            {reviews.map((elem) => (
-              <article className="p-4" key={elem.review._id}>
-                <div className="flex items-center gap-4">
-                  <img
-                    src={elem.user.avatar}
-                    alt="user-avatar"
-                    className="size-9 rounded-full"
-                  />
-
-                  <div>
-                    <p className="font-bold">{elem.user.username}</p>
-                    <p className="text-xs text-gray-500 capitalize">
-                      {dayjs(elem.review.createdAt).fromNow()}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="my-2 flex items-center gap-1">
-                  {[1, 2, 3, 4, 5].map((index) => (
-                    <IoStar
-                      className={`${elem.review.rating >= index ? "text-amber-500" : "text-gray-400"}`}
-                      key={index}
+            {reviews.map((elem) =>
+              elem.review.hidden ? null : (
+                <article className="p-4" key={elem.review._id}>
+                  <div className="flex items-center gap-4">
+                    <img
+                      src={elem.user.avatar}
+                      alt="user-avatar"
+                      className="size-9 rounded-full"
                     />
-                  ))}
-                </div>
 
-                <p className="text-justify">{elem.review.description}</p>
-              </article>
-            ))}
+                    <div>
+                      <p className="font-bold">{elem.user.username}</p>
+                      <p className="text-xs text-gray-500 capitalize">
+                        {dayjs(elem.review.createdAt).fromNow()}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="my-2 flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((index) => (
+                      <IoStar
+                        className={`${elem.review.rating >= index ? "text-amber-500" : "text-gray-400"}`}
+                        key={index}
+                      />
+                    ))}
+                  </div>
+
+                  <p className="text-justify">{elem.review.description}</p>
+                </article>
+              ),
+            )}
           </section>
         )}
 
