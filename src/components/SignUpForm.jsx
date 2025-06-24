@@ -2,10 +2,9 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { FaGoogle } from "react-icons/fa";
 
-function SignUpForm(props) {
-  const toggleAuth = props.toggleAuth;
-
+function SignUpForm({ toggleAuth, loginFromGoogle }) {
   const navigate = useNavigate();
 
   const {
@@ -150,9 +149,18 @@ function SignUpForm(props) {
         Sign Up
       </button>
 
+      <button
+        className="ring-accent text-accent hover:bg-accent mt-2 mb-3 flex w-full cursor-pointer items-center justify-center gap-4 rounded-md p-2 text-sm font-semibold ring-1 transition duration-75 ease-in-out hover:text-white active:scale-99"
+        type="button"
+        onClick={loginFromGoogle}
+      >
+        <FaGoogle />
+        <span>Continue with Google</span>
+      </button>
+
       {/* Toggle to Sign In */}
       <p className="text-center text-sm">
-        Already a member?{" "}
+        Already a member?
         <span
           className="cursor-pointer font-semibold text-[#ad336d]"
           onClick={toggleAuth}

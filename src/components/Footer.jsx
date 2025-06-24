@@ -9,7 +9,7 @@ function Footer() {
           {/* Logo + Description */}
           <div>
             <div className="mb-4 flex justify-center md:justify-start">
-              <img src="/logo-inverted.png" alt="Logo" className="h-12" />
+              <img src="/logo-inverted.png" alt="Logo" className="w-8/10" />
             </div>
             <p className="mx-auto max-w-sm text-sm leading-relaxed opacity-90 md:mx-0 md:mt-8">
               Crystal Beauty Clear brings you high-quality beauty products for
