@@ -114,7 +114,7 @@ function SignInForm({ toggleAuth, loginFromGoogle }) {
       <p className="text-center text-sm">
         New here?
         <span
-          className="cursor-pointer font-semibold text-[#ad336d]"
+          className="ml-2 cursor-pointer font-semibold text-[#ad336d]"
           onClick={toggleAuth}
         >
           Create an account

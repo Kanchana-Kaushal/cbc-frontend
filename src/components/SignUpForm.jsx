@@ -14,23 +14,8 @@ function SignUpForm({ toggleAuth, loginFromGoogle }) {
     watch,
   } = useForm();
 
-  const onSubmit = async (data) => {
-    try {
-      const response = await axios.post(
-        import.meta.env.VITE_BACKEND_URL + "/api/auth/sign-up",
-        data,
-      );
-
-      toast.success("User created successfully");
-
-      localStorage.setItem("token", response.data.data.token);
-      const user = JSON.stringify(response.data.data.user);
-      localStorage.setItem("user", user);
-
-      navigate("/");
-    } catch (err) {
-      toast.error(err.response.data.error);
-    }
+  const onSubmit = (data) => {
+    navigate("/auth/verify", { state: { data } });
   };
 
   const password = watch("password");
@@ -162,7 +147,7 @@ function SignUpForm({ toggleAuth, loginFromGoogle }) {
       <p className="text-center text-sm">
         Already a member?
         <span
-          className="cursor-pointer font-semibold text-[#ad336d]"
+          className="ml-2 cursor-pointer font-semibold text-[#ad336d]"
           onClick={toggleAuth}
         >
           Sign in here
