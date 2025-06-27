@@ -1,4 +1,4 @@
-import { MdOutlineShoppingBag } from "react-icons/md";
+import { MdOutlineShoppingBag, MdSearch, MdHourglassTop } from "react-icons/md";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -9,16 +9,16 @@ function ShopPage() {
 
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSearching, setIsSearching] = useState(false);
+  const [query, setQuery] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoading) return;
-
     (async () => {
       try {
         const { data } = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/products/`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/products/search?query=${query}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -26,11 +26,20 @@ function ShopPage() {
           },
         );
 
-        setProducts(data.data.products);
-        setIsLoading(false);
-      } catch (error) {}
+        setProducts(data.products);
+
+        if (isLoading === true) {
+          setIsLoading(false);
+        }
+
+        if (isSearching === true) {
+          setIsSearching(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     })();
-  }, [isLoading]);
+  }, [query]);
 
   const productCards = products.map((product) => {
     const markedPrice = product.priceInfo.markedPriceCents / 100;
@@ -103,46 +112,80 @@ function ShopPage() {
   });
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 pt-20 md:pt-25">
+    <main>
       {isLoading ? (
         <div className="flex h-screen w-full items-center justify-center">
           <div className="relative">
             <div className="h-16 w-16 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600 md:h-20 md:w-20" />
-            <div className="absolute top-1/2 left-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-blue-100 md:h-12 md:w-12" />
           </div>
         </div>
       ) : (
-        <div className="container mx-auto px-3 pb-12 md:px-4 md:pb-16">
-          {/* Header Section */}
-          <div className="mb-8 text-center md:mb-16">
-            <h1 className="mb-2 text-3xl font-bold tracking-tight text-gray-900 md:mb-4 md:text-5xl">
-              All Products
-            </h1>
-            <div className="bg-accent mx-auto h-0.5 w-16 rounded-full md:h-1 md:w-24" />
-            <p className="mx-auto mt-3 max-w-2xl px-4 text-sm text-gray-600 md:mt-6 md:text-lg">
-              Discover our curated collection
-            </p>
-          </div>
-
-          {/* Products Grid */}
-          <section className="mx-auto grid max-w-7xl grid-cols-2 gap-3 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5">
-            {productCards}
-          </section>
-
-          {/* Empty State */}
-          {products.length === 0 && (
-            <div className="py-12 text-center md:py-20">
-              <div className="mb-3 text-gray-400 md:mb-4">
-                <MdOutlineShoppingBag className="mx-auto text-4xl md:text-6xl" />
-              </div>
-              <h3 className="mb-1 text-lg font-semibold text-gray-600 md:mb-2 md:text-xl">
-                No products found
-              </h3>
-              <p className="text-sm text-gray-500 md:text-base">
-                Check back later for new arrivals
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 pt-20 md:pt-25">
+          <div className="container mx-auto px-3 pb-12 md:px-4 md:pb-16">
+            {/* Header Section */}
+            <div className="mb-8 text-center md:mb-16">
+              <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 md:mb-4 md:text-4xl">
+                All Products
+              </h1>
+              <div className="bg-accent mx-auto h-0.5 w-16 rounded-full md:h-1 md:w-24" />
+              <p className="mx-auto mt-3 max-w-2xl px-4 text-sm text-gray-600 md:mt-6 md:text-lg">
+                Discover our curated collection
               </p>
+
+              {/* Search Bar */}
+              <div className="mx-auto mt-6 max-w-lg md:mt-8">
+                <div className="relative">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 md:pl-4">
+                    <MdSearch className="h-4 w-4 text-gray-500 md:h-5 md:w-5" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    className="w-full rounded-full border border-gray-300 bg-white py-2.5 pr-4 pl-10 text-sm shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none md:py-3 md:pr-5 md:pl-12 md:text-base"
+                    onChange={(e) => {
+                      setQuery(e.currentTarget.value);
+                      setIsSearching(true);
+                    }}
+                  />
+                </div>
+              </div>
             </div>
-          )}
+
+            {isSearching ? (
+              <div className="flex w-full items-center justify-center pt-15">
+                <div className="flex flex-col items-center space-y-3">
+                  <div className="relative">
+                    <MdHourglassTop className="h-8 w-8 animate-bounce text-blue-600 md:h-10 md:w-10" />
+                  </div>
+                  <p className="animate-pulse text-sm font-medium text-gray-700">
+                    Finding products...
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <>
+                {/* Products Grid */}
+                <section className="mx-auto grid w-full max-w-7xl grid-cols-2 gap-3 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5">
+                  {productCards}
+                </section>
+
+                {/* Empty State */}
+                {products.length === 0 && (
+                  <div className="py-12 text-center md:py-20">
+                    <div className="mb-3 text-gray-400 md:mb-4">
+                      <MdOutlineShoppingBag className="mx-auto text-4xl md:text-6xl" />
+                    </div>
+                    <h3 className="mb-1 text-lg font-semibold text-gray-600 md:mb-2 md:text-xl">
+                      No products found
+                    </h3>
+                    <p className="text-sm text-gray-500 md:text-base">
+                      Check back later for new arrivals
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
       )}
     </main>

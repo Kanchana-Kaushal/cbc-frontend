@@ -106,7 +106,7 @@ function ProductReviews({ reviews, productId, setIsLoading } = props) {
 
   return (
     <>
-      <section className="mx-auto mb-100 w-9/10">
+      <section className="mx-auto mb-25 w-9/10">
         <h2 className="mt-15 text-center text-xl font-semibold">Reviews</h2>
         <div className="mt-8 flex flex-wrap items-center gap-5 text-gray-400">
           <img src={userAvatar} className="size-9 rounded-full" />

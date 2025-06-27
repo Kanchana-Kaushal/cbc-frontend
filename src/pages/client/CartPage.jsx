@@ -112,19 +112,21 @@ function CartPage() {
       <main className="mx-auto min-h-screen w-9/10 pt-15 md:w-8/10 md:overflow-y-hidden md:p-4 md:pt-0">
         <div className="">
           {cartItems.length === 0 ? (
-            <div className="mx-auto mt-40 space-y-6 rounded-md p-8 ring-1 ring-gray-400 md:max-w-xl">
-              <h1 className="text-center text-gray-700">
-                There is no item to show right now, Add some items to the cart
-              </h1>
+            <div className="flex min-h-screen items-center justify-center">
+              <div className="mx-auto space-y-6 rounded-md p-8 ring-1 ring-gray-400 md:max-w-xl">
+                <h1 className="text-center text-gray-700">
+                  There is no item to show right now, Add some items to the cart
+                </h1>
 
-              <button
-                className="bg-accent mx-auto block rounded-md px-4 py-2 text-white opacity-80 hover:opacity-100"
-                onClick={() => {
-                  navigate("/shop");
-                }}
-              >
-                Continue shopping
-              </button>
+                <button
+                  className="bg-accent mx-auto block cursor-pointer rounded-md px-4 py-2 text-white opacity-80 hover:opacity-100"
+                  onClick={() => {
+                    navigate("/shop");
+                  }}
+                >
+                  Continue shopping
+                </button>
+              </div>
             </div>
           ) : (
             <>

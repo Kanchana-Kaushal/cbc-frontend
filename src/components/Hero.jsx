@@ -19,7 +19,7 @@ function Hero() {
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 1 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 1.1 }}
             className="hover:bg-accent absolute -bottom-5 left-1/2 mx-auto block -translate-x-1/2 cursor-pointer px-4 py-2 text-base text-white ring-2 ring-white backdrop-blur-md transition"
             onClick={() => {
               navigate("/shop");
