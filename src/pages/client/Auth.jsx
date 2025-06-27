@@ -42,7 +42,7 @@ function Auth() {
 
   return (
     <>
-      <div className="relative flex min-h-screen items-center justify-center bg-[url(hero-desktop.jpeg)] bg-cover bg-center py-20">
+      <div className="relative flex min-h-screen items-center justify-center bg-[url(/hero-desktop.jpeg)] bg-cover bg-center py-20">
         <div className="absolute inset-0 backdrop-blur-xs" />
 
         <section className="z-40 mt-18 w-9/10 max-w-3xl rounded-2xl bg-linear-30 from-[#f8997d] to-[#ad336d] shadow-2xl md:mt-0 md:flex md:min-h-[550px]">

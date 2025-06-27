@@ -67,7 +67,7 @@ function VerifyEmailPage() {
 
   return (
     <>
-      <main className="flex min-h-screen items-center justify-center bg-[url(hero-desktop.jpeg)] bg-cover bg-center">
+      <main className="flex min-h-screen items-center justify-center bg-[url(/hero-desktop.jpeg)] bg-cover bg-center">
         <section className="w-9/10 max-w-sm rounded-2xl bg-white p-6 text-center ring-1 ring-gray-100 drop-shadow-xl md:p-8">
           <h1 className="text-lg font-bold capitalize md:text-xl lg:text-2xl">
             Verify your email address
