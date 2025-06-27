@@ -53,61 +53,6 @@ function ProductsPage() {
     }
   };
 
-  const tableContent = products.map((product) => {
-    const { productId, images, name, inventory, priceInfo } = product;
-    const isAvailable = inventory.available;
-    const stock = inventory.stockLeft;
-    const price = (priceInfo.sellingPriceCents / 100).toFixed(2);
-
-    return (
-      <tr
-        key={productId}
-        className="cursor-pointer transition hover:bg-gray-50"
-      >
-        <td className="px-6 py-4">
-          <div
-            className={`ml-4 h-3 w-3 rounded-full ${
-              isAvailable ? "bg-green-600" : "bg-red-600"
-            }`}
-          />
-        </td>
-        <td className="px-6 py-4 text-sm text-gray-700">{productId}</td>
-        <td className="px-6 py-4 text-sm text-gray-700">
-          <img
-            src={images[0]}
-            alt="product"
-            className="size-15 object-cover object-center"
-          />
-        </td>
-        <td className="px-6 py-4 text-sm text-gray-700">{name}</td>
-        <td className="px-6 py-4 text-sm text-gray-700">{stock}</td>
-        <td className="px-6 py-4 text-sm text-gray-700">${price}</td>
-        <td className="px-6 py-4">
-          <div className="flex items-center gap-6 text-gray-600">
-            <button
-              className="size-7 cursor-pointer transition hover:text-blue-600"
-              onClick={() => {
-                navigate("/admin/edit-products", {
-                  state: product,
-                });
-              }}
-            >
-              <FaEdit />
-            </button>
-            <button
-              className="size-7 cursor-pointer transition hover:text-red-600"
-              onClick={() => {
-                deleteProduct(product._id);
-              }}
-            >
-              <FaTrash />
-            </button>
-          </div>
-        </td>
-      </tr>
-    );
-  });
-
   return (
     <>
       <section className="relative">
@@ -141,7 +86,70 @@ function ProductsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
-              {tableContent}
+              {products.length > 0 &&
+                products.map((product) => {
+                  const { productId, images, name, inventory, priceInfo } =
+                    product;
+                  const isAvailable = inventory.available;
+                  const stock = inventory.stockLeft;
+                  const price = (priceInfo?.sellingPriceCents / 100).toFixed(2);
+
+                  return (
+                    <tr
+                      key={productId}
+                      className="cursor-pointer transition hover:bg-gray-50"
+                    >
+                      <td className="px-6 py-4">
+                        <div
+                          className={`ml-4 h-3 w-3 rounded-full ${
+                            isAvailable ? "bg-green-600" : "bg-red-600"
+                          }`}
+                        />
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        {productId}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        <img
+                          src={images[0]}
+                          alt="product"
+                          className="size-15 object-cover object-center"
+                        />
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        {name}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        {stock}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        ${price}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-6 text-gray-600">
+                          <button
+                            className="size-7 cursor-pointer transition hover:text-blue-600"
+                            onClick={() => {
+                              navigate("/admin/edit-products", {
+                                state: product,
+                              });
+                            }}
+                          >
+                            <FaEdit />
+                          </button>
+                          <button
+                            className="size-7 cursor-pointer transition hover:text-red-600"
+                            onClick={() => {
+                              deleteProduct(product._id);
+                            }}
+                          >
+                            <FaTrash />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         )}

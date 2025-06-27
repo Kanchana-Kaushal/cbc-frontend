@@ -72,12 +72,7 @@ function EditProductPage() {
       toast.success("Product Updated Successfully!");
       navigate("/admin/products");
     } catch (err) {
-      console.error("Update error:", err.response?.data || err.message);
-      toast.error(
-        err.response?.data?.message ||
-          err.message ||
-          "An error occurred while updating the product",
-      );
+      toast.error(err.response.data.error);
     }
   };
 
