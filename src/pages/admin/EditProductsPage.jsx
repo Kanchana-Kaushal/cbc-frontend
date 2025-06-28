@@ -121,7 +121,13 @@ function EditProductPage() {
         <label htmlFor="name">Name:</label>
         <input
           type="text"
-          {...register("name", { required: "Product name is required" })}
+          {...register("name", {
+            required: "Product name is required",
+            maxLength: {
+              value: 75,
+              message: "Name should not be more than 75 characters",
+            },
+          })}
           className="mt-1 mb-4 w-full rounded-lg p-2 shadow-xs ring-1 ring-gray-300"
           placeholder="Vaseline body lotion"
         />
