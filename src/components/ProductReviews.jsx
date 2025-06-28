@@ -1,5 +1,4 @@
 import { IoStar } from "react-icons/io5";
-import { IoIosStarHalf } from "react-icons/io";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -26,15 +25,18 @@ function ProductReviews({ reviews, productId, setIsLoading } = props) {
   async function submitReview() {
     try {
       if (rate == 0) {
-        const err = new Error();
-        err.message = "Please select a star to rate the product";
-        throw err;
+        toast.error("Please select a star to rate the product");
+        return;
       }
 
       if (userReview.length < 4) {
-        const err = new Error();
-        err.message = "Review must contain at least 4 characters";
-        throw err;
+        toast.error("Review is too short");
+        return;
+      }
+
+      if (!user || !token) {
+        setErrorTxt("You need to Sign in  to leave a review");
+        return;
       }
 
       const response = await axios.post(
@@ -47,7 +49,6 @@ function ProductReviews({ reviews, productId, setIsLoading } = props) {
 
       setIsLoading(true);
       toast.success("Review added successfully");
-      console.log(response.data);
     } catch (err) {
       if (err.response?.data?.error === "User unauthorized") {
         setErrorTxt("You need to Sign in again to leave a review");
@@ -63,9 +64,7 @@ function ProductReviews({ reviews, productId, setIsLoading } = props) {
         err.response?.data?.error ===
         "You must purchase and recieve this product to leave a review"
       ) {
-        setErrorTxt(
-          "You must purchase and recieve this product to leave a review",
-        );
+        setErrorTxt(err.response?.data?.error);
       }
     }
   }
@@ -101,8 +100,6 @@ function ProductReviews({ reviews, productId, setIsLoading } = props) {
     setErrorTxt("");
     navigate("/auth");
   };
-
-  console.log(reviews);
 
   return (
     <>
@@ -187,12 +184,6 @@ function ProductReviews({ reviews, productId, setIsLoading } = props) {
             )}
           </section>
         )}
-
-        <ErrorModal
-          errorText={errorTxt}
-          buttonText={"Okay"}
-          onButtonClick={whenUnauthorized}
-        />
 
         <ErrorModal
           errorText={errorTxt}
