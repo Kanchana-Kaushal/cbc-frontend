@@ -92,7 +92,14 @@ function SignInForm({ toggleAuth, loginFromGoogle }) {
       )}
 
       <div className="mb-4 flex justify-end text-sm text-gray-800">
-        <a href="#">Forgot Password?</a>
+        <p
+          className="hover:text-accent cursor-pointer transition"
+          onClick={() => {
+            navigate("/auth/forgot-password");
+          }}
+        >
+          Forgot Password?
+        </p>
       </div>
 
       <button

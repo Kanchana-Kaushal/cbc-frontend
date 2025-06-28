@@ -9,6 +9,7 @@ import CheckoutPage from "./client/CheckoutPage";
 import MyOrdersPage from "./client/MyOrdersPage";
 import Footer from "../components/Footer";
 import VerifyEmailPage from "./client/VerifyEmailPage";
+import ForgotPasswordPage from "./client/ForgotPasswordPage";
 
 function MainPage() {
   return (
@@ -22,6 +23,10 @@ function MainPage() {
           <Route path="/product/:id" element={<SingleProdPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/auth" element={<Auth />} />
+          <Route
+            path="/auth/forgot-password"
+            element={<ForgotPasswordPage />}
+          />
           <Route path="/auth/verify" element={<VerifyEmailPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/my-orders" element={<MyOrdersPage />} />
