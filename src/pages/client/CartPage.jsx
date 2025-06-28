@@ -109,7 +109,7 @@ function CartPage() {
 
   return (
     <>
-      <main className="mx-auto mb-8 min-h-screen w-9/10 pt-15 md:w-8/10 md:overflow-y-hidden md:p-4 md:pt-0">
+      <main className="mx-auto mb-8 min-h-150 md:min-h-screen w-9/10 pt-15 md:w-8/10 md:overflow-y-hidden md:p-4 md:pt-0">
         <div className="">
           {cartItems.length === 0 ? (
             <div className="flex min-h-150 items-center justify-center md:min-h-screen">
