@@ -25,7 +25,7 @@ function SignUpForm({ toggleAuth, loginFromGoogle }) {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col justify-center rounded-b-xl bg-white p-8 inset-shadow-2xs md:w-1/2 md:rounded-r-2xl md:rounded-bl-none"
     >
-      <h2 className="mb-6 text-3xl font-bold">Sign Up</h2>
+      <h2 className="mb-6 hidden text-3xl font-bold md:inline">Sign Up</h2>
 
       {/* Username */}
       <label htmlFor="username" className="text-sm text-gray-800">
@@ -140,7 +140,7 @@ function SignUpForm({ toggleAuth, loginFromGoogle }) {
         onClick={loginFromGoogle}
       >
         <FaGoogle />
-        <span>Continue with Google</span>
+        <span>Register with Google</span>
       </button>
 
       {/* Toggle to Sign In */}

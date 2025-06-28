@@ -250,11 +250,7 @@ function NavBar() {
 
               <ul className="space-y-6 text-xl font-bold text-gray-800 uppercase">
                 <li>
-                  <Link
-                    to="/home"
-                    className="cursor-pointer"
-                    onClick={toggleMenu}
-                  >
+                  <Link to="/" className="cursor-pointer" onClick={toggleMenu}>
                     Home
                   </Link>
                 </li>
@@ -310,6 +306,16 @@ function NavBar() {
                     onClick={toggleMenu}
                   >
                     Gift Sets
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to="/about"
+                    className="cursor-pointer"
+                    onClick={toggleMenu}
+                  >
+                    About us
                   </Link>
                 </li>
               </ul>
