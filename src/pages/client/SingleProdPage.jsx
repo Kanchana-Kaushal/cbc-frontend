@@ -71,14 +71,16 @@ function SingleProdPage() {
 
   return (
     <>
-      <main className="mx-auto pt-15 md:max-w-8/10 md:p-0">
+      <main className="mx-auto md:max-w-8/10">
         {isLoading ? (
-          <div className="mt-50 flex h-full w-full items-center justify-center">
-            <div className="h-[70px] w-[70px] animate-spin rounded-full border-[5px] border-gray-300 border-t-blue-900" />
+          <div className="flex min-h-150 w-full items-center justify-center md:min-h-screen">
+            <div className="relative">
+              <div className="h-16 w-16 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600 md:h-20 md:w-20" />
+            </div>
           </div>
         ) : (
           <>
-            <div className="items-center justify-center md:flex">
+            <div className="items-center justify-center pt-15 md:flex md:p-0">
               <section className="relative justify-center md:mt-30 md:flex md:w-1/2">
                 <div className="md:max-w-80">
                   <div className="mx-auto aspect-square max-w-100 bg-amber-100">

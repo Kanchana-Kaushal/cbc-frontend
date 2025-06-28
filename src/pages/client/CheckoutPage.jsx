@@ -6,11 +6,25 @@ import cart from "../../utils/cart";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
+import ErrorModal from "../../components/ErrorModal";
 
 function CheckoutPage() {
-  const [cartItems, setCartItems] = useState(cart.get);
+  const [errorTxt, setErrorTxt] = useState("");
 
+  const cartItems = cart.get();
+  const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
+
+  const whenUnauthorized = () => {
+    setErrorTxt("");
+    navigate("/auth");
+  };
+
+  useEffect(() => {
+    if (!user) {
+      setErrorTxt("You must sign in before making an order!");
+    }
+  }, []);
 
   let total = 0;
 
@@ -28,14 +42,7 @@ function CheckoutPage() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const user = JSON.parse(localStorage.getItem("user"));
     const token = localStorage.getItem("token");
-
-    if (!user) {
-      toast.error("You must sign in first to make a purchase");
-      navigate("/auth");
-      return;
-    }
 
     if (user.role === "admin") {
       toast.error("Admins cannot make purchases");
@@ -364,6 +371,11 @@ function CheckoutPage() {
           </div>
         </div>
       </form>
+      <ErrorModal
+        errorText={errorTxt}
+        buttonText={"Sign In"}
+        onButtonClick={whenUnauthorized}
+      />
     </main>
   );
 }

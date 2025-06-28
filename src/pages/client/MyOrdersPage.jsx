@@ -87,8 +87,10 @@ function MyOrdersPage() {
     <>
       <main className="min-h-screen">
         {isLoading ? (
-          <div className="flex min-h-screen w-full items-center justify-center">
-            <div className="h-[70px] w-[70px] animate-spin rounded-full border-[5px] border-gray-300 border-t-blue-900" />
+          <div className="flex min-h-150 w-full items-center justify-center md:min-h-screen">
+            <div className="relative">
+              <div className="h-16 w-16 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600 md:h-20 md:w-20" />
+            </div>
           </div>
         ) : (
           <>

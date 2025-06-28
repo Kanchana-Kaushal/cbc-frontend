@@ -42,7 +42,7 @@ function SignInForm({ toggleAuth, loginFromGoogle }) {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col justify-center rounded-b-xl bg-white p-8 inset-shadow-2xs md:w-1/2 md:rounded-r-2xl md:rounded-bl-none"
     >
-      <h2 className="mb-6 text-3xl font-bold">Sign In</h2>
+      <h2 className="mb-6 hidden text-3xl font-bold md:inline">Sign In</h2>
 
       {/* Email */}
       <label htmlFor="email" className="text-sm text-gray-900">
