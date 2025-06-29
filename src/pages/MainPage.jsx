@@ -10,6 +10,7 @@ import MyOrdersPage from "./client/MyOrdersPage";
 import Footer from "../components/Footer";
 import VerifyEmailPage from "./client/VerifyEmailPage";
 import ForgotPasswordPage from "./client/ForgotPasswordPage";
+import AboutPage from "./client/AboutPage";
 
 function MainPage() {
   return (
@@ -23,6 +24,7 @@ function MainPage() {
           <Route path="/product/:id" element={<SingleProdPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route
             path="/auth/forgot-password"
             element={<ForgotPasswordPage />}
