@@ -109,7 +109,7 @@ function CartPage() {
 
   return (
     <>
-      <main className="mx-auto mb-8 min-h-150 md:min-h-screen w-9/10 pt-15 md:w-8/10 md:overflow-y-hidden md:p-4 md:pt-0">
+      <main className="mx-auto mb-8 min-h-150 w-9/10 pt-15 md:min-h-screen md:w-8/10 md:overflow-y-hidden md:p-4 md:pt-0">
         <div className="">
           {cartItems.length === 0 ? (
             <div className="flex min-h-150 items-center justify-center md:min-h-screen">
@@ -131,7 +131,7 @@ function CartPage() {
           ) : (
             <>
               <div className="space-y-4 md:flex">
-                <div className="space-y-4 overflow-y-scroll md:max-h-screen md:min-h-screen md:w-6/10 md:p-4 md:pt-12">
+                <div className="space-y-4 md:max-h-screen md:min-h-screen md:w-6/10 md:overflow-y-scroll md:p-4 md:pt-12">
                   <div className="mx-auto mt-12 mb-6 flex w-9/10 items-center justify-between">
                     <h1 className="text-center text-2xl font-bold md:text-left">
                       My Cart
