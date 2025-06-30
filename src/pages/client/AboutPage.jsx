@@ -35,7 +35,7 @@ function AboutPage() {
               <div className="relative overflow-hidden rounded-2xl bg-white shadow-xl">
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
-                    src="/about-section-hero.webp"
+                    src="/about-section-hero.jpg"
                     alt="Crystal Beauty Clear hero image"
                     className="h-full w-full object-cover"
                   />
@@ -91,7 +91,7 @@ function AboutPage() {
                 <div className="relative overflow-hidden rounded-2xl bg-white shadow-xl">
                   <div className="aspect-[3/4] overflow-hidden">
                     <img
-                      src="/about-section-mission.webp"
+                      src="/about-section-mission.jpg"
                       alt="Our mission - inclusive beauty"
                       className="h-full w-full object-cover"
                     />
