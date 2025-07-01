@@ -16,30 +16,34 @@ function ProductsPage() {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/products/search?query=${query}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+    const timeOut = setTimeout(() => {
+      (async () => {
+        try {
+          const { data } = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/products/search?query=${query}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             },
-          },
-        );
+          );
 
-        setProducts(data.products);
+          setProducts(data.products);
 
-        if (isLoading === true) {
-          setIsLoading(false);
+          if (isLoading === true) {
+            setIsLoading(false);
+          }
+
+          if (isSearching === true) {
+            setIsSearching(false);
+          }
+        } catch (error) {
+          console.log(error);
         }
+      })();
+    }, 300);
 
-        if (isSearching === true) {
-          setIsSearching(false);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    return () => clearTimeout(timeOut);
   }, [query, isLoading]);
 
   /* Delete Function */

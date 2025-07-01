@@ -82,7 +82,7 @@ function SingleProdPage() {
           <>
             <div className="items-center justify-center pt-15 md:flex md:p-0">
               <section className="relative justify-center md:mt-30 md:flex md:w-1/2">
-                <div className="md:max-w-80">
+                <div className="md:max-w-95">
                   <div className="mx-auto aspect-square max-w-100 bg-amber-100">
                     <img
                       src={product.images[prodImageIndex]}
@@ -109,7 +109,7 @@ function SingleProdPage() {
                       <img
                         key={index}
                         src={image}
-                        className={`size-20 cursor-pointer rounded-sm object-cover ring-3 ${prodImageIndex === index ? "ring-accent" : "ring-gray-300"}`}
+                        className={`size-20 cursor-pointer object-cover ring-2 ${prodImageIndex === index ? "ring-accent" : "ring-gray-300"}`}
                         onClick={() => {
                           setProdImageIndex(index);
                         }}
