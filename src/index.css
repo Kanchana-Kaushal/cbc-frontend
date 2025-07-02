@@ -7,4 +7,13 @@
   --color-primary: #fdfffc;
   --color-font: #001011;
   --color-accent: #dd5e98;
+
+  --color-White: hsl(0, 0%, 100%);
+  --color-Light-pink: hsl(275, 100%, 97%);
+  --color-Grayish-purple: hsl(292, 16%, 49%);
+  --color-Dark-purple: hsl(292, 42%, 14%);
+}
+
+@utility no-scrollbar {
+  @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
 }

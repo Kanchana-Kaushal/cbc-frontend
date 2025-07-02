@@ -16,30 +16,34 @@ function OrdersPage() {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/orders/${orderStatus}?query=${query}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+    const timeOut = setTimeout(() => {
+      (async () => {
+        try {
+          const { data } = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/orders/${orderStatus}?query=${query}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             },
-          },
-        );
+          );
 
-        setOrders(data.data.orders || []);
+          setOrders(data.data.orders || []);
 
-        if (isLoading === true) {
-          setIsLoading(false);
+          if (isLoading === true) {
+            setIsLoading(false);
+          }
+
+          if (isSearching === true) {
+            setIsSearching(false);
+          }
+        } catch (error) {
+          console.log(error);
         }
+      })();
+    }, 300);
 
-        if (isSearching === true) {
-          setIsSearching(false);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    return () => clearTimeout(timeOut);
   }, [query, orderStatus]);
 
   return (

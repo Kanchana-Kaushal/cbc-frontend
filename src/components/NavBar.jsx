@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { MdOutlineShoppingBag } from "react-icons/md";
+import { RiPencilFill } from "react-icons/ri";
 import { FaUserCircle } from "react-icons/fa";
 import { LuUser } from "react-icons/lu";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { FaEdit } from "react-icons/fa";
 import { deleteMedia, uploadMedia } from "../utils/supabase";
@@ -25,6 +26,7 @@ function NavBar() {
   const email = user?.email || "Please sign in to see your details";
   const userId = user?.userId || null;
   const avatar = user?.avatar || null;
+  const navigate = useNavigate();
 
   const [isMenuShown, setIsMenuShown] = useState(false);
   const [userPopupShown, setUserPopupShown] = useState(false);
@@ -92,7 +94,6 @@ function NavBar() {
             </li>
 
             <li className="group relative cursor-pointer">
-              {" "}
               <Link to={"/shop"} className="cursor-pointer">
                 Shop
               </Link>
@@ -100,7 +101,6 @@ function NavBar() {
             </li>
 
             <li className="group relative cursor-pointer">
-              {" "}
               <Link to={"/about"} className="cursor-pointer">
                 About
               </Link>
@@ -117,7 +117,7 @@ function NavBar() {
             <div className="relative">
               <img
                 src={avatar}
-                className="hidden size-10 cursor-pointer rounded-full md:block"
+                className="hidden size-10 cursor-pointer rounded-full object-cover object-center md:block"
                 onClick={toggleUserPopup}
               />
 
@@ -145,7 +145,9 @@ function NavBar() {
                         />
 
                         <label htmlFor="avatar">
-                          <FaEdit className="absolute -right-2 bottom-0 cursor-pointer text-gray-500 hover:text-gray-900" />
+                          <div className="absolute top-0 -right-2 cursor-pointer rounded-full bg-blue-500 p-1 text-xl text-white hover:text-gray-900">
+                            <RiPencilFill />
+                          </div>
                           <input
                             type="file"
                             id="avatar"
@@ -173,6 +175,18 @@ function NavBar() {
                         }}
                       >
                         My Orders
+                      </Link>
+
+                      <Link
+                        to="/auth"
+                        className="mt-2 block w-full rounded-md bg-gray-100 py-2 text-center text-sm font-medium text-gray-700 transition hover:bg-red-400 hover:text-white"
+                        onClick={() => {
+                          setUserPopupShown(false);
+                          localStorage.removeItem("token");
+                          localStorage.removeItem("user");
+                        }}
+                      >
+                        Log Out
                       </Link>
 
                       <Link
@@ -210,12 +224,16 @@ function NavBar() {
             className="absolute top-0 min-h-screen w-full bg-white"
           >
             <div className="mx-auto w-9/10 pt-20">
-              <Link
-                to={"/auth"}
+              <div
                 className="flex items-center justify-between"
                 onClick={toggleMenu}
               >
-                <div>
+                <div
+                  onClick={() => {
+                    navigate("/auth");
+                    toggleMenu;
+                  }}
+                >
                   <p className="text-lg font-bold text-gray-800 uppercase">
                     {username || "Login"}
                   </p>
@@ -227,10 +245,17 @@ function NavBar() {
                       src={avatar}
                       alt="User Avatar"
                       className="h-15 w-15 rounded-full border border-gray-300 object-cover shadow-sm"
+                      onClick={() => {
+                        navigate("/auth");
+                        toggleMenu;
+                      }}
                     />
 
                     <label htmlFor="avatar">
-                      <FaEdit className="absolute top-0 -right-3 cursor-pointer text-xl text-gray-500 hover:text-gray-900" />
+                      <div className="absolute -right-3 bottom-0 cursor-pointer rounded-full bg-blue-500 p-1 text-xl text-white hover:text-gray-900">
+                        <RiPencilFill />
+                      </div>
+
                       <input
                         type="file"
                         id="avatar"
@@ -244,19 +269,32 @@ function NavBar() {
                 ) : (
                   <FaUserCircle className="text-5xl text-gray-800" />
                 )}
-              </Link>
+              </div>
 
               <hr className="my-6 text-gray-500" />
 
-              <ul className="space-y-6 text-xl font-bold text-gray-800 uppercase">
+              <ul className="space-y-4 text-lg font-bold text-gray-800 capitalize">
                 <li>
-                  <Link to="/" className="cursor-pointer" onClick={toggleMenu}>
-                    Home
+                  <Link
+                    to="/my-orders"
+                    className="cursor-pointer"
+                    onClick={toggleMenu}
+                  >
+                    My Orders
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to="/shop/skincare"
+                    to="/shop"
+                    className="cursor-pointer"
+                    onClick={toggleMenu}
+                  >
+                    Shop
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/shop/category/skincare"
                     className="cursor-pointer"
                     onClick={toggleMenu}
                   >
@@ -265,7 +303,7 @@ function NavBar() {
                 </li>
                 <li>
                   <Link
-                    to="/shop/haircare"
+                    to="/shop/category/haircare"
                     className="cursor-pointer"
                     onClick={toggleMenu}
                   >
@@ -274,7 +312,16 @@ function NavBar() {
                 </li>
                 <li>
                   <Link
-                    to="/shop/fragrance"
+                    to="/shop/category/makeup"
+                    className="cursor-pointer"
+                    onClick={toggleMenu}
+                  >
+                    Makeup
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/shop/category/fragrance"
                     className="cursor-pointer"
                     onClick={toggleMenu}
                   >
@@ -283,25 +330,16 @@ function NavBar() {
                 </li>
                 <li>
                   <Link
-                    to="/shop/accessories"
+                    to="/shop/category/men"
                     className="cursor-pointer"
                     onClick={toggleMenu}
                   >
-                    Accessories
+                    Mens
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to="/shop/bath-body"
-                    className="cursor-pointer"
-                    onClick={toggleMenu}
-                  >
-                    Bath & Body
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/shop/gift-sets"
+                    to="/shop/category/gift-sets"
                     className="cursor-pointer"
                     onClick={toggleMenu}
                   >
@@ -316,6 +354,20 @@ function NavBar() {
                     onClick={toggleMenu}
                   >
                     About us
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to="/auth"
+                    className="cursor-pointer"
+                    onClick={() => {
+                      toggleMenu();
+                      localStorage.removeItem("token");
+                      localStorage.removeItem("user");
+                    }}
+                  >
+                    Log Out
                   </Link>
                 </li>
               </ul>

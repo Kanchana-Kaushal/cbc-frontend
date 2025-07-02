@@ -15,30 +15,35 @@ function ShopPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/products/search?query=${query}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+    //Added debouncing to control the backend call amount.
+    const timeOut = setTimeout(() => {
+      (async () => {
+        try {
+          const { data } = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/products/search?query=${query}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             },
-          },
-        );
+          );
 
-        setProducts(data.products);
+          setProducts(data.products);
 
-        if (isLoading === true) {
-          setIsLoading(false);
+          if (isLoading === true) {
+            setIsLoading(false);
+          }
+
+          if (isSearching === true) {
+            setIsSearching(false);
+          }
+        } catch (error) {
+          console.log(error);
         }
+      })();
+    }, 300);
 
-        if (isSearching === true) {
-          setIsSearching(false);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    return () => clearTimeout(timeOut);
   }, [query]);
 
   const productCards = products.map((product) => {
@@ -48,7 +53,7 @@ function ShopPage() {
 
     return (
       <article
-        className="group relative overflow-hidden rounded-lg border border-white/50 bg-white/80 p-0 shadow-lg backdrop-blur-sm transition-all duration-300 hover:border-gray-200 hover:shadow-2xl"
+        className="group relative overflow-hidden rounded-lg border border-white/50 bg-white/80 p-0 shadow-lg backdrop-blur-sm md:transition-all md:duration-300 md:hover:border-gray-200 md:hover:shadow-2xl"
         key={product.productId}
       >
         {/* Discount Badge */}
@@ -68,9 +73,10 @@ function ShopPage() {
           <img
             src={product.images[0]}
             alt={product.name}
-            className="h-full w-full object-cover transition-all duration-700 group-hover:scale-105"
+            className="h-full w-full object-cover md:transition-all md:duration-700 md:group-hover:scale-105"
+            loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 md:transition-opacity md:duration-300 md:group-hover:opacity-100" />
         </div>
 
         {/* Product Info */}
@@ -95,13 +101,13 @@ function ShopPage() {
 
           {/* Add to Cart Button */}
           <button
-            className="ring-accent text-accent group hover:bg-accent relative w-full cursor-pointer overflow-hidden rounded-sm p-1.5 text-sm font-semibold ring-1 transition-all duration-300 hover:scale-[1.02] hover:text-white hover:shadow-lg active:scale-[0.98] md:p-2 md:text-base"
+            className="ring-accent text-accent group hover:bg-accent relative w-full cursor-pointer overflow-hidden rounded-sm p-1.5 text-sm font-semibold ring-1 hover:text-white md:p-2 md:text-base md:transition-all md:duration-300 md:hover:scale-[1.02] md:hover:text-white md:hover:shadow-lg md:active:scale-[0.98]"
             onClick={() => {
               cart.add(1, product);
             }}
           >
             <div className="relative flex items-center justify-center gap-1.5 md:gap-2">
-              <MdOutlineShoppingBag className="text-base transition-transform duration-300 group-hover:scale-110 md:text-lg" />
+              <MdOutlineShoppingBag className="text-base md:text-lg md:transition-transform md:duration-300 md:group-hover:scale-110" />
               <span className="hidden md:inline">Add to Cart</span>
               <span className="md:hidden">Add</span>
             </div>
@@ -128,7 +134,7 @@ function ShopPage() {
                 All Products
               </h1>
               <div className="bg-accent mx-auto h-0.5 w-16 rounded-full md:h-1 md:w-24" />
-              <p className="mx-auto mt-3 max-w-2xl px-4 text-sm text-gray-600 md:mt-6 md:text-lg">
+              <p className="mx-auto mt-3 max-w-2xl px-4 text-center text-sm text-gray-600 md:mt-6 md:text-lg">
                 Discover our curated collection
               </p>
 
@@ -141,7 +147,7 @@ function ShopPage() {
                   <input
                     type="text"
                     placeholder="Search products..."
-                    className="w-full rounded-full border border-gray-300 bg-white py-2.5 pr-4 pl-10 text-sm shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none md:py-3 md:pr-5 md:pl-12 md:text-base"
+                    className="w-full rounded-full border border-gray-300 bg-white py-2.5 pr-4 pl-10 text-sm shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none md:py-3 md:pr-5 md:pl-12 md:text-base md:transition-all md:duration-300"
                     onChange={(e) => {
                       setQuery(e.currentTarget.value);
                       setIsSearching(true);

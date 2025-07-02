@@ -17,7 +17,6 @@ import DisplayOrderPage from "./DisplayOrderPage";
 import ProductReviews from "./ProductReviews";
 import ManageReviews from "./ManageReviews";
 import axios from "axios";
-import toast from "react-hot-toast";
 
 function AdminHome() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -61,7 +60,7 @@ function AdminHome() {
               <img
                 src={user.avatar}
                 alt="user avatar"
-                className="size-15 rounded-full"
+                className="size-15 rounded-full object-cover object-center"
               />
               <div className="text-center">
                 <p className="text-lg font-bold text-gray-900">
