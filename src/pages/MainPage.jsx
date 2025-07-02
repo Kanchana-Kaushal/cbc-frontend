@@ -11,6 +11,7 @@ import Footer from "../components/Footer";
 import VerifyEmailPage from "./client/VerifyEmailPage";
 import ForgotPasswordPage from "./client/ForgotPasswordPage";
 import AboutPage from "./client/AboutPage";
+import CustomShopPage from "./client/CustomShopPage";
 
 function MainPage() {
   return (
@@ -21,6 +22,7 @@ function MainPage() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shop/:type/:criteria" element={<CustomShopPage />} />
           <Route path="/product/:id" element={<SingleProdPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/auth" element={<Auth />} />

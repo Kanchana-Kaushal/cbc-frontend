@@ -12,30 +12,34 @@ function UserPage() {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/users?query=${query}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+    const timeOut = setTimeout(() => {
+      (async () => {
+        try {
+          const { data } = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/users?query=${query}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             },
-          },
-        );
+          );
 
-        setUsers(data.data.users);
+          setUsers(data.data.users);
 
-        if (isLoading === true) {
-          setIsLoading(false);
+          if (isLoading === true) {
+            setIsLoading(false);
+          }
+
+          if (isSearching === true) {
+            setIsSearching(false);
+          }
+        } catch (error) {
+          toast.error(error.response?.data?.message || "Something went wrong");
         }
+      })();
+    }, 300);
 
-        if (isSearching === true) {
-          setIsSearching(false);
-        }
-      } catch (error) {
-        toast.error(error.response?.data?.message || "Something went wrong");
-      }
-    })();
+    return () => clearTimeout(timeOut);
   }, [query, isLoading]);
 
   const tableContent = users.map((user) => {

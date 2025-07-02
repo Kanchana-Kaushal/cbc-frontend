@@ -82,7 +82,7 @@ function SingleProdPage() {
           <>
             <div className="items-center justify-center pt-15 md:flex md:p-0">
               <section className="relative justify-center md:mt-30 md:flex md:w-1/2">
-                <div className="md:max-w-80">
+                <div className="md:max-w-95">
                   <div className="mx-auto aspect-square max-w-100 bg-amber-100">
                     <img
                       src={product.images[prodImageIndex]}
@@ -109,7 +109,7 @@ function SingleProdPage() {
                       <img
                         key={index}
                         src={image}
-                        className={`size-20 cursor-pointer rounded-sm object-cover ring-3 ${prodImageIndex === index ? "ring-accent" : "ring-gray-300"}`}
+                        className={`size-20 cursor-pointer object-cover ring-2 ${prodImageIndex === index ? "ring-accent" : "ring-gray-300"}`}
                         onClick={() => {
                           setProdImageIndex(index);
                         }}
@@ -120,10 +120,19 @@ function SingleProdPage() {
               </section>
 
               <section className="mx-auto mt-12 mb-8 w-8/10 max-w-110 space-y-4 md:mt-30 md:w-full">
-                <div className="flex items-center justify-between gap-2">
-                  <p className="text-xs font-semibold tracking-wider text-gray-700 uppercase">
-                    {product.brand}
-                  </p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <p className="text-xs font-semibold tracking-wider text-gray-700 uppercase">
+                      {product.brand}
+                    </p>
+
+                    {product.bestSeller && (
+                      <p className="text-xs font-semibold tracking-wider text-amber-400 uppercase">
+                        <span className="mx-2 text-gray-900">|</span> Best
+                        Seller
+                      </p>
+                    )}
+                  </div>
 
                   <div className="flex items-center gap-1">
                     <IoStar className="text-sm text-orange-400" />
@@ -169,7 +178,7 @@ function SingleProdPage() {
                     className="bg-accent flex w-full cursor-pointer items-center justify-center gap-4 rounded-md p-3 font-bold text-white transition-all hover:scale-101 hover:opacity-95 md:w-6/10"
                     onClick={() => {
                       cart.add(qty, product);
-                      setQty(0);
+                      setQty(1);
                     }}
                   >
                     <MdOutlineShoppingBag />

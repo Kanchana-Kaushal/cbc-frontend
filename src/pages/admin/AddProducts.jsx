@@ -258,8 +258,6 @@ function AddProductsPage() {
         <option value="makeup">Makeup</option>
         <option value="haircare">Haircare</option>
         <option value="fragrance">Fragrance</option>
-        <option value="bath_body">Bath & Body</option>
-        <option value="tools_accessories">Tools & Accessories</option>
         <option value="men">Men</option>
         <option value="gifts_sets">Gifts & Sets</option>
       </select>
