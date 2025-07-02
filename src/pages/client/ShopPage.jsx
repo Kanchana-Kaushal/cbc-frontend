@@ -134,7 +134,7 @@ function ShopPage() {
                 All Products
               </h1>
               <div className="bg-accent mx-auto h-0.5 w-16 rounded-full md:h-1 md:w-24" />
-              <p className="mx-auto mt-3 max-w-2xl px-4 text-sm text-gray-600 md:mt-6 md:text-lg">
+              <p className="mx-auto mt-3 max-w-2xl px-4 text-center text-sm text-gray-600 md:mt-6 md:text-lg">
                 Discover our curated collection
               </p>
 

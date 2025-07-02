@@ -131,7 +131,7 @@ function CartPage() {
           ) : (
             <>
               <div className="space-y-4 md:flex">
-                <div className="space-y-4 md:max-h-screen md:min-h-screen md:w-6/10 md:overflow-y-scroll md:p-4 md:pt-12">
+                <div className="space-y-4 md:max-h-screen md:min-h-screen md:w-6/10 md:overflow-y-auto md:p-4 md:pt-12">
                   <div className="mx-auto mt-12 mb-6 flex w-9/10 items-center justify-between">
                     <h1 className="text-center text-2xl font-bold md:text-left">
                       My Cart

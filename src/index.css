@@ -8,3 +8,7 @@
   --color-font: #001011;
   --color-accent: #dd5e98;
 }
+
+@utility no-scrollbar {
+  @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}

@@ -169,7 +169,7 @@ function SingleProdPage() {
                     className="bg-accent flex w-full cursor-pointer items-center justify-center gap-4 rounded-md p-3 font-bold text-white transition-all hover:scale-101 hover:opacity-95 md:w-6/10"
                     onClick={() => {
                       cart.add(qty, product);
-                      setQty(0);
+                      setQty(1);
                     }}
                   >
                     <MdOutlineShoppingBag />

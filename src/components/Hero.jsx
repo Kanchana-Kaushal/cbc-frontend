@@ -21,7 +21,7 @@ function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, ease: "easeOut", delay: 1.1 }}
-            className="hover:bg-accent text-accent ring-accent absolute -bottom-5 left-1/2 mx-auto block min-w-40 -translate-x-1/2 cursor-pointer px-4 py-2 text-base ring-2 backdrop-blur-md transition md:hover:text-white"
+            className="hover:bg-accent text-accent ring-accent absolute -bottom-5 left-1/2 mx-auto block min-w-40 -translate-x-1/2 cursor-pointer px-4 py-2 text-base ring-2 backdrop-blur-md transition hover:text-white md:hover:text-white"
             onClick={() => {
               navigate("/shop");
             }}
