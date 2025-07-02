@@ -120,10 +120,19 @@ function SingleProdPage() {
               </section>
 
               <section className="mx-auto mt-12 mb-8 w-8/10 max-w-110 space-y-4 md:mt-30 md:w-full">
-                <div className="flex items-center justify-between gap-2">
-                  <p className="text-xs font-semibold tracking-wider text-gray-700 uppercase">
-                    {product.brand}
-                  </p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <p className="text-xs font-semibold tracking-wider text-gray-700 uppercase">
+                      {product.brand}
+                    </p>
+
+                    {product.bestSeller && (
+                      <p className="text-xs font-semibold tracking-wider text-amber-400 uppercase">
+                        <span className="mx-2 text-gray-900">|</span> Best
+                        Seller
+                      </p>
+                    )}
+                  </div>
 
                   <div className="flex items-center gap-1">
                     <IoStar className="text-sm text-orange-400" />

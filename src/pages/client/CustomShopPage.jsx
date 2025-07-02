@@ -69,7 +69,7 @@ function CustomShopPage() {
         }
       })();
     }
-  }, []);
+  }, [topic]);
 
   const productCards = products.map((product) => {
     const markedPrice = product.priceInfo.markedPriceCents / 100;

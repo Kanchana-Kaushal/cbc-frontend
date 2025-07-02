@@ -106,7 +106,10 @@ function ProductReviews({ reviews, productId, setIsLoading } = props) {
       <section className="mx-auto mb-25 w-9/10">
         <h2 className="mt-15 text-center text-xl font-semibold">Reviews</h2>
         <div className="mt-8 flex flex-wrap items-center gap-5 text-gray-400">
-          <img src={userAvatar} className="size-9 rounded-full" />
+          <img
+            src={userAvatar}
+            className="size-9 rounded-full object-cover object-center"
+          />
           <div className="flex gap-2">
             {[1, 2, 3, 4, 5].map((star) => {
               return (

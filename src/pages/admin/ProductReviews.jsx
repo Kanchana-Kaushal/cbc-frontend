@@ -11,25 +11,30 @@ function ProductReviews() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!isLoading) return;
-
-    (async () => {
-      try {
-        const { data } = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/products/`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+    const timeOut = setTimeout(() => {
+      (async () => {
+        try {
+          const { data } = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/products/search?query=`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             },
-          },
-        );
+          );
 
-        setProducts(data.data.products);
-        setIsLoading(false);
-      } catch (error) {
-        toast.error(error.response?.data?.message || "Something went wrong");
-      }
-    })();
+          setProducts(data.products);
+
+          if (isLoading === true) {
+            setIsLoading(false);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }, 300);
+
+    return () => clearTimeout(timeOut);
   }, [isLoading]);
 
   const tableContent = products.map((product) => {

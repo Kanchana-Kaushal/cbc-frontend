@@ -85,7 +85,7 @@ function MyOrdersPage() {
 
   return (
     <>
-      <main className="min-h-screen">
+      <main className="min-h-150 md:min-h-screen">
         {isLoading ? (
           <div className="flex min-h-150 w-full items-center justify-center md:min-h-screen">
             <div className="relative">
@@ -95,7 +95,7 @@ function MyOrdersPage() {
         ) : (
           <>
             {orders.length === 0 ? (
-              <div className="flex min-h-screen items-center justify-center">
+              <div className="flex min-h-150 items-center justify-center md:min-h-screen">
                 <div className="space-y-4 rounded-md p-8 text-center">
                   <h1 className="text-2xl font-semibold">
                     There is no item to show you right now :(
