@@ -12,6 +12,7 @@ import VerifyEmailPage from "./client/VerifyEmailPage";
 import ForgotPasswordPage from "./client/ForgotPasswordPage";
 import AboutPage from "./client/AboutPage";
 import CustomShopPage from "./client/CustomShopPage";
+import BuyNowPage from "./client/BuyNowPage";
 
 function MainPage() {
   return (
@@ -33,6 +34,7 @@ function MainPage() {
           />
           <Route path="/auth/verify" element={<VerifyEmailPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/buy-now" element={<BuyNowPage />} />
           <Route path="/my-orders" element={<MyOrdersPage />} />
         </Routes>
       </div>

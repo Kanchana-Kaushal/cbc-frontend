@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
@@ -14,6 +14,7 @@ import { IoStar } from "react-icons/io5";
 function SingleProdPage() {
   const params = useParams();
   const productId = params.id;
+  const navigate = useNavigate();
 
   const [product, setProduct] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -193,7 +194,23 @@ function SingleProdPage() {
                   </p>
                 </div>
 
-                <button className="ring-accent hover:bg-accent hover:text-primary flex w-full cursor-pointer items-center justify-center gap-4 rounded-md p-3 font-bold text-black ring-1 transition-colors">
+                <button
+                  className="ring-accent hover:bg-accent hover:text-primary flex w-full cursor-pointer items-center justify-center gap-4 rounded-md p-3 font-bold text-black ring-1 transition-colors"
+                  onClick={() => {
+                    navigate("/buy-now", {
+                      state: {
+                        item: {
+                          _id: product._id,
+                          productId: product.productId,
+                          name: product.name,
+                          qty: qty,
+                          priceCents: product.priceInfo.sellingPriceCents,
+                          image: product.images[0],
+                        },
+                      },
+                    });
+                  }}
+                >
                   <MdOutlinePayment />
                   Buy Now
                 </button>
