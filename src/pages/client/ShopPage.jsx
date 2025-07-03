@@ -171,7 +171,7 @@ function ShopPage() {
             ) : (
               <>
                 {/* Products Grid */}
-                <section className="max-w-8xl mx-auto grid w-full grid-cols-2 gap-3 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5">
+                <section className="mx-auto grid w-full max-w-7xl grid-cols-2 gap-3 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8 xl:grid-cols-5">
                   {productCards}
                 </section>
 
