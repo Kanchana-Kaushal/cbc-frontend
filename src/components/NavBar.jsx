@@ -221,7 +221,7 @@ function NavBar() {
             animate={{ x: 0 }}
             exit={{ x: "-100vw" }}
             transition={{ ease: "easeOut" }}
-            className="absolute top-0 min-h-screen w-full bg-white"
+            className="absolute top-0 min-h-screen w-full overflow-y-auto bg-white"
           >
             <div className="mx-auto w-9/10 pt-20">
               <div
@@ -283,6 +283,7 @@ function NavBar() {
                     My Orders
                   </Link>
                 </li>
+
                 <li>
                   <Link
                     to="/shop"
@@ -335,15 +336,6 @@ function NavBar() {
                     onClick={toggleMenu}
                   >
                     Mens
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/shop/category/gift-sets"
-                    className="cursor-pointer"
-                    onClick={toggleMenu}
-                  >
-                    Gift Sets
                   </Link>
                 </li>
 

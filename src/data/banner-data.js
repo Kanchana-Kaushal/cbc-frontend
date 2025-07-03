@@ -9,7 +9,7 @@ const bannerData = [
     imgUrl: "/cosrx-banner.jpg",
     query: "cosrx",
     topic: "COSRX",
-    description: "CORSRX top selling K-Beauty toners.",
+    description: "COSRX top selling K-Beauty toners.",
   },
   {
     imgUrl: "/eqqualberry-banner.png",

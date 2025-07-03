@@ -10,6 +10,9 @@ import faqArray from "../../data/faq-data";
 import { IoIosStar } from "react-icons/io";
 import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 import categories from "../../data/category-data";
+import { MdEmail } from "react-icons/md";
+import { IoLogoWhatsapp } from "react-icons/io";
+import { BiSupport } from "react-icons/bi";
 
 function Home() {
   const token = localStorage.getItem("token");
@@ -60,6 +63,15 @@ function Home() {
       ),
     );
   }
+
+  const handleWhatsAppClick = () => {
+    const phoneNumber = import.meta.env.VITE_WHATSAPP_NUMBER;
+    const message =
+      "Hi! I need help with your beauty products. Can you assist me?";
+
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
 
   const bestSellersArr = products
     .filter((product) => product.bestSeller === true)
@@ -313,55 +325,58 @@ function Home() {
         </div>
       </div>
 
-      <div className="mx-auto mt-8 w-9/10 md:my-16 md:w-8/10">
-        <div className="flex items-center justify-between md:mb-8">
-          <h2 className="text-2xl font-bold md:text-3xl">Best Sellers</h2>
-          <button
-            className="text-accent lg:hover:bg-accent cursor-pointer rounded-2xl px-4 py-1 text-xs ring-1 transition md:text-sm lg:hover:text-white"
-            onClick={() => {
-              navigate("/shop/category/best-seller");
-            }}
-          >
-            See More
-          </button>
-        </div>
-        <div className="no-scrollbar mx-auto flex snap-x snap-mandatory gap-8 overflow-x-auto p-8 md:hidden">
-          {bestSellers}
-        </div>
+      {!isLoading && (
+        <>
+          <div className="mx-auto mt-8 w-9/10 md:my-16 md:w-8/10">
+            <div className="flex items-center justify-between md:mb-8">
+              <h2 className="text-2xl font-bold md:text-3xl">Best Sellers</h2>
+              <button
+                className="text-accent lg:hover:bg-accent cursor-pointer rounded-2xl px-4 py-1 text-xs ring-1 transition md:text-sm lg:hover:text-white"
+                onClick={() => {
+                  navigate("/shop/category/best-seller");
+                }}
+              >
+                See More
+              </button>
+            </div>
+            <div className="no-scrollbar mx-auto flex snap-x snap-mandatory gap-8 overflow-x-auto p-8 md:hidden">
+              {bestSellers}
+            </div>
 
-        <div className="mx-auto hidden grid-cols-3 gap-8 md:grid lg:hidden">
-          {bestSellers.slice(0, 3)}
-        </div>
+            <div className="mx-auto hidden grid-cols-3 gap-8 md:grid lg:hidden">
+              {bestSellers.slice(0, 3)}
+            </div>
 
-        <div className="mx-auto hidden grid-cols-4 gap-8 lg:grid xl:hidden">
-          {bestSellers.slice(0, 4)}
-        </div>
+            <div className="mx-auto hidden grid-cols-4 gap-8 lg:grid xl:hidden">
+              {bestSellers.slice(0, 4)}
+            </div>
 
-        <div className="mx-auto hidden grid-cols-5 gap-8 xl:grid">
-          {bestSellers.slice(0, 5)}
-        </div>
-      </div>
+            <div className="mx-auto hidden grid-cols-5 gap-8 xl:grid">
+              {bestSellers.slice(0, 5)}
+            </div>
+          </div>
+          <div className="mx-auto mt-8 w-9/10 md:my-16 md:w-8/10">
+            <div className="flex items-center justify-between md:mb-8">
+              <h2 className="text-2xl font-bold md:text-3xl">New Arrivals</h2>
+            </div>
+            <div className="no-scrollbar mx-auto flex snap-x snap-mandatory gap-8 overflow-x-auto p-8 md:hidden">
+              {newArrivals}
+            </div>
 
-      <div className="mx-auto mt-8 w-9/10 md:my-16 md:w-8/10">
-        <div className="flex items-center justify-between md:mb-8">
-          <h2 className="text-2xl font-bold md:text-3xl">New Arrivals</h2>
-        </div>
-        <div className="no-scrollbar mx-auto flex snap-x snap-mandatory gap-8 overflow-x-auto p-8 md:hidden">
-          {newArrivals}
-        </div>
+            <div className="mx-auto hidden grid-cols-3 gap-8 md:grid lg:hidden">
+              {newArrivals.slice(0, 3)}
+            </div>
 
-        <div className="mx-auto hidden grid-cols-3 gap-8 md:grid lg:hidden">
-          {newArrivals.slice(0, 3)}
-        </div>
+            <div className="mx-auto hidden grid-cols-4 gap-8 lg:grid xl:hidden">
+              {newArrivals.slice(0, 4)}
+            </div>
 
-        <div className="mx-auto hidden grid-cols-4 gap-8 lg:grid xl:hidden">
-          {newArrivals.slice(0, 4)}
-        </div>
-
-        <div className="mx-auto hidden grid-cols-5 gap-8 xl:grid">
-          {newArrivals.slice(0, 5)}
-        </div>
-      </div>
+            <div className="mx-auto hidden grid-cols-5 gap-8 xl:grid">
+              {newArrivals.slice(0, 5)}
+            </div>
+          </div>
+        </>
+      )}
 
       <div className="mx-auto my-16 w-9/10 md:w-8/10">
         {/* Section Header */}
@@ -393,6 +408,41 @@ function Home() {
           </div>
 
           <section className="space-y-4">{faqElements}</section>
+        </div>
+      </div>
+
+      <div className="mx-auto my-16 max-w-xl p-8">
+        <div className="mb-8 text-center">
+          <div className="mb-4 flex justify-center">
+            <div className="rounded-full bg-gradient-to-r from-pink-100 to-rose-100 p-4">
+              <BiSupport className="h-8 w-8 text-rose-500" />
+            </div>
+          </div>
+
+          <h2 className="mb-3 text-2xl font-light text-gray-800">
+            Need Beauty Advice?
+          </h2>
+
+          <p className="leading-relaxed text-gray-600">
+            Our beauty experts are here to help you find the perfect products
+            for your skin. Get personalized recommendations!
+          </p>
+        </div>
+
+        <div className="flex flex-col justify-center gap-3 sm:flex-row">
+          <button
+            onClick={handleWhatsAppClick}
+            className="flex cursor-pointer items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-400 to-green-500 px-6 py-3 text-sm font-light text-white shadow-lg transition-all duration-300 hover:from-emerald-500 hover:to-green-600 hover:shadow-xl"
+          >
+            <IoLogoWhatsapp size={18} />
+            WhatsApp
+          </button>
+        </div>
+
+        <div className="mt-6 text-center">
+          <p className="text-xs font-light text-gray-400">
+            Get expert beauty advice • Free consultations • Quick response
+          </p>
         </div>
       </div>
     </>
