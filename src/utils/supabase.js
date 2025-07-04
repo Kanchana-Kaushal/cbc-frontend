@@ -3,7 +3,13 @@ import { createClient } from "@supabase/supabase-js";
 const url = import.meta.env.VITE_SUPABASE_URL;
 const key = import.meta.env.VITE_SUPABASE_KEY;
 
-const supabase = createClient(url, key);
+let supabase;
+
+if (!globalThis.__supabase) {
+  globalThis.__supabase = createClient(url, key);
+}
+
+supabase = globalThis.__supabase;
 
 export const uploadMedia = async (file) => {
   try {
@@ -47,12 +53,14 @@ export const deleteMedia = async (fileName) => {
       throw new Error("File name is required to delete");
     }
 
-    const { error: deleteError } = await supabase.storage
-      .from("cbc-images")
-      .remove([fileName]);
+    if (fileName.includes("supabase.co/storage/v1/object/public/cbc-images/")) {
+      const { error: deleteError } = await supabase.storage
+        .from("cbc-images")
+        .remove([fileName]);
 
-    if (deleteError) {
-      throw deleteError;
+      if (deleteError) {
+        throw deleteError;
+      }
     }
 
     return true;
