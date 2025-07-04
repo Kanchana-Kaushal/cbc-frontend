@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function Hero() {
   const navigate = useNavigate();
   return (
-    <div className="flex min-h-150 items-center justify-center bg-[url(/hero-section-mobile.jpg)] bg-cover bg-fixed md:min-h-screen md:justify-start md:bg-[url(/hero-section-img.jpg)]">
+    <div className="flex min-h-150 items-center justify-center bg-[url(/hero-section-mobile.jpg)] bg-cover bg-fixed bg-right md:min-h-screen md:justify-start md:bg-[url(/hero-section-img.jpg)] md:bg-left-top">
       <div className="mx-auto w-9/10 md:w-8/10">
         <motion.div
           initial={{ y: 40, opacity: 0 }}
