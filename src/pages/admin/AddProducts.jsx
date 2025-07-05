@@ -58,6 +58,8 @@ function AddProductsPage() {
       },
     };
 
+    const loadingToastId = toast.loading("Loading...");
+
     try {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/products/add-new",
@@ -69,15 +71,14 @@ function AddProductsPage() {
         },
       );
 
-      toast.success("Product Saved Successfully!");
-
+      toast.success("Product Saved Successfully!", { id: loadingToastId });
       navigate("/admin/products");
     } catch (err) {
-      console.error("Update error:", err.response?.data || err.message);
       toast.error(
         err.response?.data?.message ||
           err.message ||
           "An error occurred while updating the product",
+        { id: loadingToastId },
       );
     }
   };

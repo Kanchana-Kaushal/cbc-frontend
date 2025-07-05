@@ -24,6 +24,7 @@ function CreateAdminPage() {
       return;
     }
 
+    const loadingToastId = toast.loading("Loading...");
     try {
       const avatarUrl = await uploadMedia(avatar);
 
@@ -44,12 +45,12 @@ function CreateAdminPage() {
         },
       );
 
-      toast.success("Admin created successfully!");
+      toast.success("Admin created successfully!", { id: loadingToastId });
       navigate("/admin/admins");
     } catch (err) {
-      console.error(err.response?.data || err.message);
       toast.error(
         err.response?.data?.message || "Failed to create admin account",
+        { id: loadingToastId },
       );
     }
   };

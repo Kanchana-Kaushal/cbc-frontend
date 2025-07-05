@@ -48,6 +48,7 @@ function ProductsPage() {
 
   /* Delete Function */
   const deleteProduct = async (productId) => {
+    const loadingToastId = toast.loading("Loading...");
     try {
       const response = await axios.delete(
         import.meta.env.VITE_BACKEND_URL + "/api/products/" + productId,
@@ -58,10 +59,10 @@ function ProductsPage() {
         },
       );
 
-      toast.success("Product deleted successfully");
+      toast.success("Product deleted successfully", { id: loadingToastId });
       setIsLoading(true);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response.data.message, { id: loadingToastId });
     }
   };
 

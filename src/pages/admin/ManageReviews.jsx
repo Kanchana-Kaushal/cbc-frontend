@@ -15,6 +15,7 @@ function ManageReviews() {
   const [expanded, setExpanded] = useState({}); // Track which reviews are expanded
 
   async function toggleHide(reviewId, hidden) {
+    const loadingToastId = toast.loading("Loading...");
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/products/${productId}/hide-review`,
@@ -25,10 +26,10 @@ function ManageReviews() {
         { headers: { Authorization: "Bearer " + token } },
       );
 
-      toast.success(response.data.message);
+      toast.success(response.data.message, { id: loadingToastId });
       setReviews(response.data.data.product.reviews);
     } catch (err) {
-      console.log(err.response.data.error);
+      console.log(err.response.data.error, { id: loadingToastId });
     }
   }
 

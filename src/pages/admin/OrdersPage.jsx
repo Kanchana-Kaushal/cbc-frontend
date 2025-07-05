@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineShoppingBag, MdSearch, MdHourglassTop } from "react-icons/md";
 

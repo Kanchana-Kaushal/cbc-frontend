@@ -37,9 +37,10 @@ function BuyNowPage() {
 
   const onSubmit = async (data) => {
     const token = localStorage.getItem("token");
+    const loadingToastId = toast.loading("Placing Order...");
 
     if (user.role === "admin") {
-      toast.error("Admins cannot make purchases");
+      toast.error("Admins cannot make purchases", { id: loadingToastId });
       return;
     }
 
@@ -79,7 +80,7 @@ function BuyNowPage() {
         },
       );
 
-      toast.success("Order Placed Successfully");
+      toast.success("Order Placed Successfully", { id: loadingToastId });
 
       navigate("/my-orders");
     } catch (err) {
@@ -87,6 +88,7 @@ function BuyNowPage() {
         err.response?.data?.error ||
           err.message ||
           "An error occurred while placing order",
+        { id: loadingToastId },
       );
     }
   };

@@ -14,17 +14,16 @@ function SignInForm({ toggleAuth, loginFromGoogle }) {
   } = useForm();
 
   const onSubmit = async (data) => {
+    const loadingToastId = toast.loading("Signing In...");
     try {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/auth/sign-in",
         data,
       );
 
-      toast.success("Login Successful");
-
+      toast.success("Login Successful", { id: loadingToastId });
       const user = JSON.stringify(response.data.data.user);
       localStorage.setItem("user", user);
-
       localStorage.setItem("token", response.data.data.token);
 
       if (response.data.data.user.role === "admin") {
@@ -33,7 +32,7 @@ function SignInForm({ toggleAuth, loginFromGoogle }) {
         navigate("/");
       }
     } catch (err) {
-      toast.error(err.response.data.error);
+      toast.error(err.response.data.error, { id: loadingToastId });
     }
   };
 

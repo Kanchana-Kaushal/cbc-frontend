@@ -161,7 +161,7 @@ function ProductReviews({ reviews, productId, setIsLoading } = props) {
                     <img
                       src={elem.user.avatar}
                       alt="user-avatar"
-                      className="size-9 rounded-full"
+                      className="size-9 rounded-full object-cover object-center"
                     />
 
                     <div>

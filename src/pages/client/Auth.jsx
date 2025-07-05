@@ -17,13 +17,14 @@ function Auth() {
   const loginFromGoogle = useGoogleLogin({
     onSuccess: async (res) => {
       try {
+        const loadingToastId = toast.loading("Signing In...");
         const accessToken = res.access_token;
         const response = await axios.post(
           import.meta.env.VITE_BACKEND_URL + "/api/auth/google-login",
           { accessToken: accessToken },
         );
 
-        toast.success("Google login successful");
+        toast.success("Google login successful", { id: loadingToastId });
 
         localStorage.setItem("token", response.data.data.token);
         const user = JSON.stringify(response.data.data.user);
@@ -31,12 +32,12 @@ function Auth() {
 
         navigate("/");
       } catch (err) {
-        toast.error(err.response?.data?.error || err);
+        toast.error(err.response?.data?.error || err, { id: loadingToastId });
       }
     },
 
     onError: (err) => {
-      toast.error(err);
+      toast.error(err, { id: loadingToastId });
     },
   });
 
@@ -47,9 +48,14 @@ function Auth() {
 
         <section className="z-40 mt-18 w-9/10 max-w-3xl rounded-2xl bg-linear-30 from-[#f8997d] to-[#ad336d] shadow-2xl md:mt-0 md:flex md:min-h-[550px]">
           <div className="flex flex-col items-center justify-center space-y-2 p-8 text-center md:w-1/2">
-            <h1 className="text-2xl font-bold tracking-wide text-white md:text-4xl">
+            <h1 className="hidden text-2xl font-bold tracking-wide text-white md:block md:text-4xl">
               {isSignIn ? "Welcome Back!" : "Hello There!"}
             </h1>
+
+            <h1 className="text-2xl font-bold tracking-wide text-white md:hidden md:text-4xl">
+              {isSignIn ? "Sign In" : "Sign Up!"}
+            </h1>
+
             <p className="text-sm text-gray-100">
               {isSignIn
                 ? "You can sign in to access with your existing account."

@@ -63,6 +63,7 @@ function AdminPage() {
   });
 
   const banUser = async (userId, banned) => {
+    const loadingToastId = toast.loading("Loading...");
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/ban-user`,
@@ -73,11 +74,14 @@ function AdminPage() {
           },
         },
       );
-      toast.success(response.data.message);
+
+      toast.success(response.data.message, { id: loadingToastId });
 
       setIsLoading(true);
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to ban user");
+      toast.error(error.response?.data?.message || "Failed to ban user", {
+        id: loadingToastId,
+      });
     }
   };
 

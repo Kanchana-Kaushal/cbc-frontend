@@ -28,6 +28,7 @@ function EditProductPage() {
       toast.error("Please enter at least one keyword");
       return;
     }
+    const loadingToastId = toast.loading("Loading...");
 
     try {
       const imageArray = await Promise.all(
@@ -69,10 +70,10 @@ function EditProductPage() {
         },
       );
 
-      toast.success("Product Updated Successfully!");
+      toast.success("Product Updated Successfully!", { id: loadingToastId });
       navigate("/admin/products");
     } catch (err) {
-      toast.error(err.response.data.error);
+      toast.error(err.response.data.error, { id: loadingToastId });
     }
   };
 

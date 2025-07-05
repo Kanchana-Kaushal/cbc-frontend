@@ -54,6 +54,7 @@ function MyOrderModal(props) {
   }
 
   const handleCancelOrder = async (orderId) => {
+    const loadingToastId = toast.loading("Cacellling...");
     try {
       const response = await axios.put(
         import.meta.env.VITE_BACKEND_URL + "/api/orders/update/" + orderId,
@@ -62,15 +63,16 @@ function MyOrderModal(props) {
           headers: { Authorization: "Bearer " + token },
         },
       );
-      toast.success("Order cancelled successfully");
+      toast.success("Order cancelled successfully", { id: loadingToastId });
       closeModal();
       setIsLoading(true);
     } catch (err) {
-      toast.error("Failed to cancel order");
+      toast.error("Failed to cancel order", { id: loadingToastId });
     }
   };
 
   const handleConfirmReceived = async (orderId) => {
+    const loadingToastId = toast.loading("Confirming...");
     try {
       const response = await axios.put(
         import.meta.env.VITE_BACKEND_URL + "/api/orders/update/" + orderId,
@@ -79,12 +81,12 @@ function MyOrderModal(props) {
           headers: { Authorization: "Bearer " + token },
         },
       );
-      toast.success("Order marked as received");
+      toast.success("Order marked as received", { id: loadingToastId });
       closeModal();
       setIsLoading(true);
     } catch (err) {
       console.log(err);
-      toast.error("Failed to confirm order received");
+      toast.error("Failed to confirm order received", { id: loadingToastId });
     }
   };
 

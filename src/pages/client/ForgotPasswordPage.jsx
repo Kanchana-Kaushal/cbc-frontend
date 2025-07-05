@@ -57,21 +57,23 @@ function ForgotPasswordPage() {
   }, [isEmailValid]);
 
   const requestVerificationCode = async () => {
+    const loadingToastId = toast.loading("Sending Code...");
     try {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/auth/send-code",
         { email },
       );
 
-      toast.success(response.data.message);
+      toast.success(response.data.message, { id: loadingToastId });
       setTimeLeft(300);
     } catch (err) {
-      toast.error(err.response.data.error);
+      toast.error(err.response.data.error, { id: loadingToastId });
     }
   };
 
   const changePassword = async (data) => {
     const password = data.password;
+    const loadingToastId = toast.loading("Verifying...");
 
     try {
       const response = await axios.put(
@@ -82,10 +84,10 @@ function ForgotPasswordPage() {
         },
       );
 
-      toast.success(response.data.message);
+      toast.success(response.data.message, { id: loadingToastId });
       navigate("/auth");
     } catch (err) {
-      console.log(err);
+      console.log(err.response.data.error, { id: loadingToastId });
     }
   };
 

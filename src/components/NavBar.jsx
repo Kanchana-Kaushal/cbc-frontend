@@ -7,32 +7,28 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { FaEdit } from "react-icons/fa";
 import { deleteMedia, uploadMedia } from "../utils/supabase";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 function NavBar() {
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    if (setIsLoading) {
-      setIsLoading(false);
-    }
-  }, [isLoading]);
-
-  const user = JSON.parse(localStorage.getItem("user")) || null;
+  const LocalUser = JSON.parse(localStorage.getItem("user")) || null;
   const token = localStorage.getItem("token");
+
+  const [isMenuShown, setIsMenuShown] = useState(false);
+  const [userPopupShown, setUserPopupShown] = useState(false);
+  const [user, setUser] = useState(LocalUser);
+
   const username = user?.username || "User";
   const email = user?.email || "Please sign in to see your details";
   const userId = user?.userId || null;
   const avatar = user?.avatar || null;
   const navigate = useNavigate();
 
-  const [isMenuShown, setIsMenuShown] = useState(false);
-  const [userPopupShown, setUserPopupShown] = useState(false);
-
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0]; // Get the first selected file
+    const loadingToastId = toast.loading("Updating Avatar...");
+
     if (selectedFile) {
       try {
         const url = await uploadMedia(selectedFile);
@@ -44,12 +40,17 @@ function NavBar() {
           { headers: { Authorization: "Bearer " + token } },
         );
 
-        deleteMedia(existingAvatarUrl);
         localStorage.setItem("user", JSON.stringify(response.data.data.user));
-        setIsLoading(true);
-        toast.success("Avatar updated successfully");
+        setUser(JSON.parse(localStorage.getItem("user")));
+        toast.success("Avatar updated successfully", { id: loadingToastId });
+        deleteMedia(existingAvatarUrl);
       } catch (err) {
-        toast.error(err.message);
+        toast.error(
+          err.response?.data?.error || "Could not update the avatar",
+          {
+            id: loadingToastId,
+          },
+        );
       }
     }
   };
@@ -234,7 +235,7 @@ function NavBar() {
                     toggleMenu;
                   }}
                 >
-                  <p className="text-lg font-bold text-gray-800 uppercase">
+                  <p className="text-lg font-bold text-gray-800 capitalize">
                     {username || "Login"}
                   </p>
                   <p className="text-sm text-gray-500">{email || "Login"}</p>
@@ -244,7 +245,7 @@ function NavBar() {
                     <img
                       src={avatar}
                       alt="User Avatar"
-                      className="h-15 w-15 rounded-full border border-gray-300 object-cover shadow-sm"
+                      className="h-15 w-15 rounded-full border border-gray-300 object-cover object-center shadow-sm"
                       onClick={() => {
                         navigate("/auth");
                         toggleMenu;

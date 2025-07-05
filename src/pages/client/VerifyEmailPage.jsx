@@ -28,20 +28,22 @@ function VerifyEmailPage() {
   }, []);
 
   const requestVerificationCode = async () => {
+    const loadingToastId = toast.loading("Sending Code...");
     try {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/auth/send-code",
         { email: data.email },
       );
 
-      toast.success(response.data.message);
+      toast.success(response.data.message, { id: loadingToastId });
       setTimeLeft(5 * 60);
     } catch (err) {
-      toast.error(err.response.data.error);
+      toast.error(err.response.data.error, { id: loadingToastId });
     }
   };
 
   const verifyCodeAndSignUp = async () => {
+    const loadingToastId = toast.loading("Verifying...");
     try {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/auth/sign-up",
@@ -53,9 +55,9 @@ function VerifyEmailPage() {
       localStorage.setItem("user", user);
 
       navigate("/");
-      toast.success("User created successfully");
+      toast.success("User created successfully", { id: loadingToastId });
     } catch (err) {
-      toast.error(err.response.data.error);
+      toast.error(err.response.data.error, { id: loadingToastId });
     }
   };
 
@@ -99,9 +101,7 @@ function VerifyEmailPage() {
           <button
             className={`${timeLeft > 0 ? "opacity-50" : "cursor-pointer opacity-100 hover:bg-gray-300"} lg: max-h-fit w-full cursor-not-allowed rounded-lg bg-gray-200 py-1.5 text-sm font-bold text-gray-700 transition md:text-base`}
             disabled={timeLeft > 0 ? true : false}
-            onClick={() => {
-              requestVerificationCode;
-            }}
+            onClick={requestVerificationCode}
           >
             Resend Code
           </button>
