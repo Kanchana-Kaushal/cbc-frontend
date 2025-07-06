@@ -27,20 +27,19 @@ function SingleProdPage() {
   let discountRate = 100 - Math.round((sellingPrice / markedPrice) * 100) || 0;
 
   useEffect(() => {
-    try {
-      (async () => {
+    (async () => {
+      try {
         const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/products/${productId}`,
         );
 
         setReviews(response.data.data.reviews);
         setProduct(response.data.data.product);
-      })();
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Something went wrong");
-    } finally {
-      setIsLoading(false);
-    }
+      } catch (error) {
+      } finally {
+        setIsLoading(false);
+      }
+    })();
   }, []);
 
   function increaseQty() {
@@ -80,7 +79,7 @@ function SingleProdPage() {
               <div className="h-16 w-16 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600 md:h-20 md:w-20" />
             </div>
           </div>
-        ) : !product ? (
+        ) : !isLoading && !product ? (
           <div className="mx-auto flex min-h-screen w-9/10 items-center justify-center">
             <div className="text-center">
               <h1 className="text-2xl font-bold text-gray-800">
