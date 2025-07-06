@@ -79,6 +79,8 @@ function ProductReviews({
       );
 
       refreshReviews();
+      setRate(0);
+      setUserReview("");
       toast.success("Review added successfully", { id: loadingToastId });
     } catch (err) {
       toast.dismiss(loadingToastId);
