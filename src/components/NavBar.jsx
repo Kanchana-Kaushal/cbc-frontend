@@ -12,12 +12,16 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 function NavBar() {
-  const LocalUser = JSON.parse(localStorage.getItem("user")) || null;
-  const token = localStorage.getItem("token");
-
   const [isMenuShown, setIsMenuShown] = useState(false);
   const [userPopupShown, setUserPopupShown] = useState(false);
-  const [user, setUser] = useState(LocalUser);
+  const [user, setUser] = useState({});
+
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const LocalUser = JSON.parse(localStorage.getItem("user")) || null;
+    setUser(LocalUser);
+  }, [isMenuShown, userPopupShown]);
 
   const username = user?.username || "User";
   const email = user?.email || "Please sign in to see your details";

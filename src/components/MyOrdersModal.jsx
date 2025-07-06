@@ -67,6 +67,8 @@ function MyOrderModal(props) {
       closeModal();
       setIsLoading(true);
     } catch (err) {
+      console.log(err);
+
       toast.error("Failed to cancel order", { id: loadingToastId });
     }
   };
