@@ -35,15 +35,16 @@ function SingleProdPage() {
 
         setReviews(response.data.data.reviews);
         setProduct(response.data.data.product);
-        setIsLoading(false);
       })();
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
-  }, [isLoading]);
+  }, []);
 
   function increaseQty() {
-    if (qty >= 100) {
+    if (qty >= 100 || qty >= product.inventory.stockLeft) {
       return;
     }
 
@@ -79,9 +80,20 @@ function SingleProdPage() {
               <div className="h-16 w-16 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600 md:h-20 md:w-20" />
             </div>
           </div>
+        ) : !product ? (
+          <div className="mx-auto flex min-h-screen w-9/10 items-center justify-center">
+            <div className="text-center">
+              <h1 className="text-2xl font-bold text-gray-800">
+                Product Not Found
+              </h1>
+              <p className="mt-2 text-gray-600">
+                The product you're looking for doesn't exist.
+              </p>
+            </div>
+          </div>
         ) : (
           <>
-            <div className="items-center justify-center pt-15 md:flex md:p-0">
+            <div className="items-center justify-center pt-15 md:flex md:gap-6 md:p-0">
               <section className="relative justify-center md:mt-30 md:flex md:w-1/2">
                 <div className="md:max-w-95">
                   <div className="mx-auto aspect-square max-w-100 bg-amber-100">
@@ -145,11 +157,11 @@ function SingleProdPage() {
                 </div>
 
                 <h1 className="text-2xl font-extrabold">{product.name}</h1>
-                <p className="text-xs text-gray-400 md:text-sm">
+                <p className="text-justify text-xs text-gray-400 md:text-sm">
                   {product.description}
                 </p>
 
-                <div className="my-6 flex items-center justify-between">
+                <div className="mt-6 flex items-center justify-between">
                   <p className="flex items-center text-2xl font-extrabold">
                     ${sellingPrice.toFixed(2)}
                     <span className="bg-accent ml-4 rounded-sm px-1 py-0.5 text-xs text-white">
@@ -161,6 +173,12 @@ function SingleProdPage() {
                     ${markedPrice.toFixed(2)}
                   </p>
                 </div>
+
+                {product.inventory.stockLeft <= 10 && (
+                  <p className="text-right text-xs text-red-500">
+                    Only {product.inventory.stockLeft} left
+                  </p>
+                )}
 
                 <div className="gap-4 space-y-4 md:flex md:space-y-0">
                   <div className="flex justify-between rounded-md bg-gray-200 p-3 md:w-4/10">
