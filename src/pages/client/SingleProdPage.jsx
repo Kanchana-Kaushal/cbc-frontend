@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
@@ -13,6 +12,7 @@ import { IoStar } from "react-icons/io5";
 
 function SingleProdPage() {
   const params = useParams();
+  const token = localStorage.getItem("token");
   const productId = params.id;
   const navigate = useNavigate();
 
@@ -31,6 +31,9 @@ function SingleProdPage() {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/products/${productId}`,
+          {
+            headers: { Authorization: "Bearer " + token },
+          },
         );
 
         setReviews(response.data.data.reviews);
@@ -40,7 +43,7 @@ function SingleProdPage() {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [productId]);
 
   function increaseQty() {
     if (qty >= 100 || qty >= product.inventory.stockLeft) {
@@ -237,7 +240,8 @@ function SingleProdPage() {
             <ProductReviews
               reviews={reviews}
               productId={product._id}
-              setIsLoading={setIsLoading}
+              setProduct={setProduct}
+              setReviews={setReviews}
             />
           </>
         )}
