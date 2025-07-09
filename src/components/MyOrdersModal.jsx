@@ -240,7 +240,7 @@ function MyOrderModal(props) {
                     onClick={() =>
                       handleCancelOrder(selectedOrder.order.orderId)
                     }
-                    className="rounded-lg bg-red-600 px-4 py-2 text-white transition-colors hover:bg-red-700"
+                    className="cursor-pointer rounded-lg bg-red-600 px-4 py-2 text-white transition-colors hover:bg-red-700"
                   >
                     Cancel Order
                   </button>
@@ -250,14 +250,14 @@ function MyOrderModal(props) {
                     onClick={() =>
                       handleConfirmReceived(selectedOrder.order.orderId)
                     }
-                    className="rounded-lg bg-green-600 px-4 py-2 text-white transition-colors hover:bg-green-700"
+                    className="cursor-pointer rounded-lg bg-green-600 px-4 py-2 text-white transition-colors hover:bg-green-700"
                   >
                     Confirm Received
                   </button>
                 )}
                 <button
                   onClick={closeModal}
-                  className="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50"
+                  className="cursor-pointer rounded-lg border border-gray-300 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50"
                 >
                   Close
                 </button>

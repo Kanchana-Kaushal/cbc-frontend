@@ -263,7 +263,7 @@ function DisplayOrderPage() {
             <div className="mt-8 flex justify-center gap-8 text-center">
               {nextOrderStatus === "confirmed" && (
                 <button
-                  className="transform rounded-lg bg-red-500 px-8 py-4 text-lg font-bold text-white shadow-lg transition-colors duration-200 hover:-translate-y-1 hover:shadow-xl"
+                  className="transform cursor-pointer rounded-lg bg-red-500 px-8 py-4 text-lg font-bold text-white shadow-lg transition-colors duration-200 hover:-translate-y-1 hover:shadow-xl"
                   onClick={() => {
                     updateOrder("cancelled");
                   }}
@@ -274,7 +274,7 @@ function DisplayOrderPage() {
 
               {nextOrderStatus && (
                 <button
-                  className="transform rounded-lg bg-blue-600 px-8 py-4 text-lg font-bold text-white shadow-lg transition-colors duration-200 hover:-translate-y-1 hover:bg-blue-700 hover:shadow-xl"
+                  className="transform cursor-pointer rounded-lg bg-blue-600 px-8 py-4 text-lg font-bold text-white shadow-lg transition-colors duration-200 hover:-translate-y-1 hover:bg-blue-700 hover:shadow-xl"
                   onClick={() => {
                     updateOrder(nextOrderStatus);
                   }}
