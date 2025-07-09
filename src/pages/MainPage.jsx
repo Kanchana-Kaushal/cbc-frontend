@@ -13,6 +13,7 @@ import ForgotPasswordPage from "./client/ForgotPasswordPage";
 import AboutPage from "./client/AboutPage";
 import CustomShopPage from "./client/CustomShopPage";
 import BuyNowPage from "./client/BuyNowPage";
+import NotFoundPage from "./client/NotFoundPage";
 
 function MainPage() {
   return (
@@ -36,6 +37,7 @@ function MainPage() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/buy-now" element={<BuyNowPage />} />
           <Route path="/my-orders" element={<MyOrdersPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
 

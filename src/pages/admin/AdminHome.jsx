@@ -17,6 +17,7 @@ import DisplayOrderPage from "./DisplayOrderPage";
 import ProductReviews from "./ProductReviews";
 import ManageReviews from "./ManageReviews";
 import axios from "axios";
+import NotFoundPage from "../client/NotFoundPage";
 
 function AdminHome() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -134,6 +135,7 @@ function AdminHome() {
               <Route path="/users" element={<UserPage />} />
               <Route path="/admins" element={<AdminPage />} />
               <Route path="/admins/add-admin" element={<CreateAdminPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>
         </div>
