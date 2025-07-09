@@ -301,6 +301,12 @@ function NavBar() {
                 </li>
 
                 <li>
+                  <Link to="/" className="cursor-pointer" onClick={toggleMenu}>
+                    Home
+                  </Link>
+                </li>
+
+                <li>
                   <Link
                     to="/shop"
                     className="cursor-pointer"
