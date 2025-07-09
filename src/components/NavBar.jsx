@@ -5,7 +5,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { LuUser } from "react-icons/lu";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { deleteMedia, uploadMedia } from "../utils/supabase";
 import axios from "axios";
@@ -28,6 +28,7 @@ function NavBar() {
   const userId = user?.userId || null;
   const avatar = user?.avatar || null;
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0]; // Get the first selected file
@@ -95,27 +96,35 @@ function NavBar() {
               <Link to={"/"} className="cursor-pointer">
                 Home
               </Link>
-              <span className="bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full opacity-0 group-hover:opacity-100" />
+              <span
+                className={`bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full group-hover:opacity-100 ${location.pathname === "/" ? "opacity-100" : "opacity-0"}`}
+              />
             </li>
 
             <li className="group relative cursor-pointer">
               <Link to={"/shop"} className="cursor-pointer">
                 Shop
               </Link>
-              <span className="bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full opacity-0 group-hover:opacity-100" />
+              <span
+                className={`bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full group-hover:opacity-100 ${location.pathname === "/shop" ? "opacity-100" : "opacity-0"}`}
+              />
             </li>
 
             <li className="group relative cursor-pointer">
               <Link to={"/about"} className="cursor-pointer">
                 About
               </Link>
-              <span className="bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full opacity-0 group-hover:opacity-100" />
+              <span
+                className={`bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full group-hover:opacity-100 ${location.pathname === "/about" ? "opacity-100" : "opacity-0"}`}
+              />
             </li>
           </ul>
 
           <Link to={"/cart"} className="group relative cursor-pointer">
             <MdOutlineShoppingBag className="text-3xl text-gray-800" />
-            <span className="bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full opacity-0 group-hover:opacity-100" />
+            <span
+              className={`bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full group-hover:opacity-100 ${location.pathname === "/cart" ? "opacity-100" : "opacity-0"}`}
+            />
           </Link>
 
           {user ? (
@@ -213,7 +222,9 @@ function NavBar() {
           ) : (
             <Link to={"/auth"} className="group relative cursor-pointer">
               <LuUser className="hidden text-3xl text-gray-800 md:flex" />
-              <span className="bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full opacity-0 group-hover:opacity-100" />
+              <span
+                className={`bg-accent absolute -bottom-4.5 left-0 min-h-1.5 w-full group-hover:opacity-100 ${location.pathname === "/auth" ? "opacity-100" : "opacity-0"}`}
+              />
             </Link>
           )}
         </div>
