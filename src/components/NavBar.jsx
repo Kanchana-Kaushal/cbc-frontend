@@ -17,18 +17,18 @@ function NavBar() {
   const [user, setUser] = useState({});
 
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const LocalUser = JSON.parse(localStorage.getItem("user")) || null;
     setUser(LocalUser);
-  }, [isMenuShown, userPopupShown]);
+  }, [location.pathname]);
 
   const username = user?.username || "User";
   const email = user?.email || "Please sign in to see your details";
   const userId = user?.userId || null;
   const avatar = user?.avatar || null;
-  const navigate = useNavigate();
-  const location = useLocation();
 
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0]; // Get the first selected file
