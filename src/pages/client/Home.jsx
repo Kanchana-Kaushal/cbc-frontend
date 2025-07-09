@@ -325,20 +325,90 @@ function Home() {
         </div>
       </div>
 
-      {!isLoading && (
-        <>
-          <div className="mx-auto mt-8 w-9/10 md:my-16 md:w-8/10">
-            <div className="flex items-center justify-between md:mb-8">
-              <h2 className="text-2xl font-bold md:text-3xl">Best Sellers</h2>
-              <button
-                className="text-accent lg:hover:bg-accent cursor-pointer rounded-2xl px-4 py-1 text-xs ring-1 transition md:text-sm lg:hover:text-white"
-                onClick={() => {
-                  navigate("/shop/category/best-seller");
-                }}
-              >
-                See More
-              </button>
+      <div className="mx-auto mt-8 w-9/10 md:my-16 md:w-8/10">
+        <div className="flex items-center justify-between md:mb-8">
+          <h2 className="text-2xl font-bold md:text-3xl">Best Sellers</h2>
+          <button
+            className="text-accent lg:hover:bg-accent cursor-pointer rounded-2xl px-4 py-1 text-xs ring-1 transition md:text-sm lg:hover:text-white"
+            onClick={() => {
+              navigate("/shop/category/best-seller");
+            }}
+          >
+            See More
+          </button>
+        </div>
+        {isLoading ? (
+          <>
+            <div className="no-scrollbar mx-auto flex snap-x snap-mandatory gap-8 overflow-x-auto p-8 md:hidden">
+              {[1, 2, 3, 4, 5].map((skeleton) => (
+                <div
+                  className="mx-auto min-w-7/10 animate-pulse snap-center snap-always rounded-md shadow-xl"
+                  key={skeleton}
+                >
+                  <div className="min-h-50 rounded-t-lg bg-gray-100" />
+                  <div className="space-y-1 p-4">
+                    <div className="min-h-3 bg-gray-300" />
+                    <div className="min-h-3 w-2/3 bg-gray-300" />
+                    <div className="my-3 min-h-5 w-1/3 bg-gray-300" />{" "}
+                    <div className="min-h-8 rounded-md bg-gray-200" />
+                  </div>
+                </div>
+              ))}
             </div>
+
+            <div className="mx-auto hidden grid-cols-3 gap-8 md:grid lg:hidden">
+              {[1, 2, 3].map((skeleton) => (
+                <div
+                  className="animate-pulse rounded-lg shadow-xl"
+                  key={skeleton}
+                >
+                  <div className="min-h-50 rounded-t-lg bg-gray-100" />
+                  <div className="space-y-1 p-4">
+                    <div className="min-h-3 bg-gray-300" />
+                    <div className="min-h-3 w-2/3 bg-gray-300" />
+                    <div className="my-3 min-h-5 w-1/3 bg-gray-300" />{" "}
+                    <div className="min-h-10 rounded-lg bg-gray-200" />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mx-auto hidden grid-cols-4 gap-8 lg:grid xl:hidden">
+              {[1, 2, 3, 4].map((skeleton) => (
+                <div
+                  className="animate-pulse rounded-lg shadow-xl"
+                  key={skeleton}
+                >
+                  <div className="min-h-50 rounded-t-lg bg-gray-100" />
+                  <div className="space-y-1 p-4">
+                    <div className="min-h-3 bg-gray-300" />
+                    <div className="min-h-3 w-2/3 bg-gray-300" />
+                    <div className="my-3 min-h-5 w-1/3 bg-gray-300" />{" "}
+                    <div className="min-h-10 rounded-lg bg-gray-200" />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mx-auto hidden grid-cols-5 gap-8 xl:grid">
+              {[1, 2, 3, 4, 5].map((skeleton) => (
+                <div
+                  className="animate-pulse rounded-lg shadow-xl duration-2000"
+                  key={skeleton}
+                >
+                  <div className="min-h-50 rounded-t-lg bg-gray-100" />
+                  <div className="space-y-1 p-4">
+                    <div className="min-h-3 bg-gray-300" />
+                    <div className="min-h-3 w-2/3 bg-gray-300" />
+                    <div className="my-3 min-h-5 w-1/3 bg-gray-300" />{" "}
+                    <div className="min-h-10 rounded-lg bg-gray-200" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <>
             <div className="no-scrollbar mx-auto flex snap-x snap-mandatory gap-8 overflow-x-auto p-8 md:hidden">
               {bestSellers}
             </div>
@@ -354,11 +424,86 @@ function Home() {
             <div className="mx-auto hidden grid-cols-5 gap-8 xl:grid">
               {bestSellers.slice(0, 5)}
             </div>
-          </div>
-          <div className="mx-auto mt-8 w-9/10 md:my-16 md:w-8/10">
-            <div className="flex items-center justify-between md:mb-8">
-              <h2 className="text-2xl font-bold md:text-3xl">New Arrivals</h2>
+          </>
+        )}
+      </div>
+
+      <div className="mx-auto mt-8 w-9/10 md:my-16 md:w-8/10">
+        <div className="flex items-center justify-between md:mb-8">
+          <h2 className="text-2xl font-bold md:text-3xl">New Arrivals</h2>
+        </div>
+        {isLoading ? (
+          <>
+            <div className="no-scrollbar mx-auto flex snap-x snap-mandatory gap-8 overflow-x-auto p-8 md:hidden">
+              {[1, 2, 3, 4, 5].map((skeleton) => (
+                <div
+                  className="mx-auto min-w-7/10 animate-pulse snap-center snap-always rounded-md shadow-xl"
+                  key={skeleton}
+                >
+                  <div className="min-h-50 rounded-t-lg bg-gray-100" />
+                  <div className="space-y-1 p-4">
+                    <div className="min-h-3 bg-gray-300" />
+                    <div className="min-h-3 w-2/3 bg-gray-300" />
+                    <div className="my-3 min-h-5 w-1/3 bg-gray-300" />{" "}
+                    <div className="min-h-8 rounded-md bg-gray-200" />
+                  </div>
+                </div>
+              ))}
             </div>
+
+            <div className="mx-auto hidden grid-cols-3 gap-8 md:grid lg:hidden">
+              {[1, 2, 3].map((skeleton) => (
+                <div
+                  className="animate-pulse rounded-lg shadow-xl"
+                  key={skeleton}
+                >
+                  <div className="min-h-50 rounded-t-lg bg-gray-100" />
+                  <div className="space-y-1 p-4">
+                    <div className="min-h-3 bg-gray-300" />
+                    <div className="min-h-3 w-2/3 bg-gray-300" />
+                    <div className="my-3 min-h-5 w-1/3 bg-gray-300" />{" "}
+                    <div className="min-h-10 rounded-lg bg-gray-200" />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mx-auto hidden grid-cols-4 gap-8 lg:grid xl:hidden">
+              {[1, 2, 3, 4].map((skeleton) => (
+                <div
+                  className="animate-pulse rounded-lg shadow-xl"
+                  key={skeleton}
+                >
+                  <div className="min-h-50 rounded-t-lg bg-gray-100" />
+                  <div className="space-y-1 p-4">
+                    <div className="min-h-3 bg-gray-300" />
+                    <div className="min-h-3 w-2/3 bg-gray-300" />
+                    <div className="my-3 min-h-5 w-1/3 bg-gray-300" />{" "}
+                    <div className="min-h-10 rounded-lg bg-gray-200" />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mx-auto hidden grid-cols-5 gap-8 xl:grid">
+              {[1, 2, 3, 4, 5].map((skeleton) => (
+                <div
+                  className="animate-pulse rounded-lg shadow-xl duration-2000"
+                  key={skeleton}
+                >
+                  <div className="min-h-50 rounded-t-lg bg-gray-100" />
+                  <div className="space-y-1 p-4">
+                    <div className="min-h-3 bg-gray-300" />
+                    <div className="min-h-3 w-2/3 bg-gray-300" />
+                    <div className="my-3 min-h-5 w-1/3 bg-gray-300" />{" "}
+                    <div className="min-h-10 rounded-lg bg-gray-200" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <>
             <div className="no-scrollbar mx-auto flex snap-x snap-mandatory gap-8 overflow-x-auto p-8 md:hidden">
               {newArrivals}
             </div>
@@ -374,28 +519,18 @@ function Home() {
             <div className="mx-auto hidden grid-cols-5 gap-8 xl:grid">
               {newArrivals.slice(0, 5)}
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
 
       <div className="mx-auto my-16 w-9/10 md:w-8/10">
-        {/* Section Header */}
         <div className="mb-8 md:mb-12">
           <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">
             Shop by Category
           </h2>
         </div>
 
-        {/* Mobile: Vertical Stack */}
-        <div className="space-y-4 md:hidden">{categoryElements}</div>
-
-        {/* Tablet: 2 columns */}
-        <div className="hidden grid-cols-2 gap-6 md:grid lg:hidden">
-          {categoryElements}
-        </div>
-
-        {/* Desktop: 3 columns */}
-        <div className="hidden grid-cols-3 gap-8 lg:grid">
+        <div className="space-y-4 md:grid md:grid-cols-2 md:gap-6 md:space-y-0 lg:grid-cols-3 lg:gap-8">
           {categoryElements}
         </div>
       </div>
