@@ -147,53 +147,6 @@ To run Crystal Beauty Clear locally, follow these steps:
 6. **Supabase Configuration**:
    Set up a Supabase project for media storage and configure `uploadMedia` and `deleteMedia` in `src/utils/supabase.js` with your Supabase credentials.
 
-## Project Structure
-
-```
-crystal-beauty-clear/
-├── src/
-│   ├── components/
-│   │   ├── ErrorModal.jsx
-│   │   ├── Footer.jsx
-│   │   ├── Hero.jsx
-│   │   ├── MyOrderModal.jsx
-│   │   ├── NavBar.jsx
-│   │   ├── ProductReviews.jsx
-│   │   ├── ScrollToTop.jsx
-│   │   ├── SignInForm.jsx
-│   │   ├── SignUpForm.jsx
-│   │   ├── bannerData.js
-│   │   ├── categories.js
-│   │   ├── faqArray.js
-│   ├── pages/
-│   │   ├── admin/
-│   │   │   ├── AddProductsPage.jsx
-│   │   │   ├── AdminHome.jsx
-│   │   │   ├── AdminPage.jsx
-│   │   │   ├── CreateAdminPage.jsx
-│   │   │   ├── DisplayOrderPage.jsx
-│   │   │   ├── EditProductPage.jsx
-│   │   │   ├── ManageReviews.jsx
-│   │   │   ├── OrdersPage.jsx
-│   │   │   ├── ProductReviews.jsx
-│   │   │   ├── ProductsPage.jsx
-│   │   │   ├── UserPage.jsx
-│   ├── utils/
-│   │   ├── supabase.js
-│   ├── App.jsx
-│   ├── index.css
-│   ├── main.jsx
-├── public/
-│   ├── logo.png
-│   ├── logo-inverted.png
-│   ├── hero-section-img.jpg
-│   ├── hero-section-mobile.jpg
-│   ├── *-banner.* (banner images)
-├── .env
-├── package.json
-├── vite.config.js
-├── README.md
-```
 
 ## Future Enhancements
 
